@@ -1,0 +1,11 @@
+{
+	"name": "alfresco jscript templates",
+	"context": "javascript",
+	"templates": [
+		{
+			"name": "EX_AUTH_SWITCH_USER",
+			"description": "swith the authentication to another user and switch in a finally block",
+			"template": "var oldUser;\ntry {\n\toldUser = auth.getFullyAuthenticatedUser();\n\tauth.runAsSystem();\n\t// do your work here as System user\n\n}finally{\n\tauth.runAsUser(oldUser);\n}"
+		}
+	]
+}
