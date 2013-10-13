@@ -16,13 +16,13 @@
 
 	<bean id="scriptTransactions" parent="baseJavaScriptExtension"
 		class="de.jgoldhammer.alfresco.jscript.transaction.ScriptTransactions">
-		<property name="extensionName" value="transaction" />
+		<property name="extensionName" value="trans" />
 		<property name="transactionService" ref="TransactionService" />
 	</bean>
 
 	<bean id="jmxClientSciptFacade" parent="baseJavaScriptExtension"
 		class="de.jgoldhammer.alfresco.jscript.jmx.JmxClientScriptFacade">
-		<property name="extensionName" value="jmx" />
+		<property name="extensionName" value="jmxClient" />
 		<property name="alfrescoMBeanServer" ref="alfrescoMBeanServer" />
 	</bean>
 

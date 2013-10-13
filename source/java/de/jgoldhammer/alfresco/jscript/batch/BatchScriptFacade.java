@@ -1,9 +1,12 @@
 package de.jgoldhammer.alfresco.jscript.batch;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.alfresco.repo.batch.BatchProcessor;
 import org.alfresco.repo.jscript.Scopeable;
+import org.alfresco.repo.jscript.ScriptNode;
 import org.alfresco.repo.processor.BaseProcessorExtension;
 import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.repository.NodeRef;
@@ -15,13 +18,14 @@ import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.transaction.TransactionService;
 import org.mozilla.javascript.Context;
+import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.Scriptable;
 import org.springframework.extensions.webscripts.annotation.ScriptMethod;
 import org.springframework.extensions.webscripts.annotation.ScriptMethodType;
 
 /**
  * fascade to a batch processor implementation.
- * 
+ *
  * @author jgoldhammer
  */
 
@@ -50,7 +54,7 @@ public class BatchScriptFacade extends BaseProcessorExtension implements Scopeab
 	 * result of the provided luceneQuery. The processing takes place in a batch
 	 * processor with the given batchName, the number of workerthreads and the
 	 * number of nodes as batchsize.
-	 * 
+	 *
 	 * @param batchName
 	 *            the name of the batch
 	 * @param workerThreads
@@ -61,16 +65,21 @@ public class BatchScriptFacade extends BaseProcessorExtension implements Scopeab
 	 *            the lucene query to execute to make the processing on the
 	 *            nodes of the resultset
 	 * @param processorFunction
-	 *            the javascript function to process- the function has to be
-	 *            named process
-	 * 
-	 *            Example: batch.run('MyProcessor',4,10,'TEXT:alfresco',function
+	 *            the javascript function to process- the function must have the
+	 *            named "process"
+	 *
+	 *            Example:
+	 *            batch.runForQuery('MyProcessor',4,10,'TEXT:alfresco',function
 	 *            process(node){ logger.error(node); }, true);
-	 * 
+	 * @param runAsSystem
+	 *            true if the processing should be run as system, false to
+	 *            process as the current user
+	 *
 	 */
 	@ScriptMethod(code = "batch.run('MyProcessor',4,10,'TEXT:alfresco',function process(node){logger.error(node);}, true);", help = "", output = "nothing", type = ScriptMethodType.WRITE)
-	public void run(String batchName, int workerThreads, final int batchSize, final String luceneQuery,
-			final String processorFunction, final boolean runAsSystem) {
+	public void runForQuery(String batchName, int workerThreads, final int batchSize, final String luceneQuery,
+			final String processorFunction, final boolean runAsSystem, final String beforeProcessFunction,
+			final String afterProcessFunction) {
 
 		final SearchParameters params = new SearchParameters();
 		params.setLimitBy(LimitBy.UNLIMITED);
@@ -91,13 +100,72 @@ public class BatchScriptFacade extends BaseProcessorExtension implements Scopeab
 						null, FIXED_BATCH_SIZE);
 
 				processor.process(
-						new ScriptedBatchProcessWorker(runAsSystem, batchScope, processorFunction, Context.getCurrentContext(),
-								serviceRegistry, scriptService), true);
+						new ScriptedBatchProcessWorker(runAsSystem, batchScope, processorFunction, null, beforeProcessFunction,
+								afterProcessFunction, Context.getCurrentContext(), serviceRegistry, scriptService), true);
 			}
 		} finally {
 			searchResult.close();
 		}
 
+	}
+
+	/**
+	 * process the given processorfunction on a set of nodes which are given as
+	 * native array. The processing takes place in a batch processor with the
+	 * given batchName, the number of workerthreads and the number of nodes as
+	 * batchsize.
+	 *
+	 * @param batchName
+	 *            the name of the batch
+	 * @param workerThreads
+	 *            the number of threads which can be used for the batch
+	 *            processing
+	 * @param batchSize
+	 * @param scriptNodesQuery
+	 *            the array of scriptnodes to process (if you have your own
+	 *            logic to determine the nodes)
+	 * @param processorFunction
+	 *            the javascript function to process- the function must have the
+	 *            named "process"
+	 *
+	 *            Example: batch.runForNodes('MyProcessor', 4, 10, nodes,
+	 *            function process(node){ logger.error(node); }, true);
+	 * @param runAsSystem
+	 *            true if the processing should be run as system, false to
+	 *            process as the current user
+	 *
+	 */
+	@ScriptMethod(code = "batch.run('MyProcessor',4,10,'TEXT:alfresco',function process(node){logger.error(node);}, true);", help = "", output = "nothing", type = ScriptMethodType.WRITE)
+	public void runForNodes(String batchName, int workerThreads, final int batchSize, final NativeArray scriptNodes,
+			final String processorFunction, final boolean runAsSystem, final String beforeProcessFunction,
+			final String afterProcessFunction) {
+
+		BatchProcessor<Collection<NodeRef>> processor;
+		final Scriptable batchScope = this.scope;
+		List<NodeRef> nodeRefs = convertScriptNodesArray(scriptNodes);
+
+		processor = new BatchProcessor<Collection<NodeRef>>(batchName, transactionService.getRetryingTransactionHelper(),
+				new SimpleListWorkProvider(nodeRefs, batchSize), workerThreads, FIXED_BATCH_SIZE, null, null, FIXED_BATCH_SIZE);
+
+		processor.process(new ScriptedBatchProcessWorker(runAsSystem, batchScope, processorFunction, nodeRefs,
+				beforeProcessFunction, afterProcessFunction, Context.getCurrentContext(), serviceRegistry, scriptService), true);
+
+	}
+
+	/**
+	 * converts the native array of scriptnodes to a list of noderefs
+	 *
+	 * @param scriptNodes
+	 * @return list of noderefs
+	 */
+	private List<NodeRef> convertScriptNodesArray(NativeArray scriptNodes) {
+		List<NodeRef> nodes = new ArrayList<NodeRef>();
+		for (Object id : scriptNodes.getIds()) {
+			int index = (Integer) id;
+			ScriptNode scriptNode = (ScriptNode) scriptNodes.get(index, null);
+			nodes.add(scriptNode.getNodeRef());
+		}
+		return nodes;
 	}
 
 	@Override
