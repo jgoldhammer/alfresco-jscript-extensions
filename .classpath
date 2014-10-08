@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="source/java"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/alfresco-core-4.1.2.jar" sourcepath="/ALFRESCO_SDK_412/src/alfresco-core-src.zip"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/alfresco-data-model-4.1.2.jar" sourcepath="/ALFRESCO_SDK_412/src/alfresco-datamodel-src.zip"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/alfresco-remote-api-4.1.2.jar" sourcepath="/ALFRESCO_SDK_412/src/alfresco-remote-api-src.zip"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/alfresco-repository-4.1.2.jar" sourcepath="/ALFRESCO_SDK_412/src/alfresco-repository-src.zip"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/commons/commons-io-1.4.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/commons/commons-lang-2.6.jar" sourcepath="/ALFRESCO_SDK_412/src/commons-lang-2.6-sources.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/commons/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/j2ee/servlet.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/optional/log4j-1.2.15.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/json.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/org.springframework.beans-3.0.5.RELEASE.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/org.springframework.context-3.0.5.RELEASE.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/org.springframework.core-3.0.5.RELEASE.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/rhino-js-1.6R7.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/spring-surf/spring-surf-core-1.2.0-SNAPSHOT.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/spring-surf/spring-webscripts-1.2.0-SNAPSHOT.jar" sourcepath="/ALFRESCO_SDK_412/src/spring-webscripts-1.2.0-SNAPSHOT-sources.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/spring-surf/spring-webscripts-api-1.2.0-SNAPSHOT.jar" sourcepath="/ALFRESCO_SDK_412/src/spring-webscripts-api-1.2.0-SNAPSHOT-sources.jar"/>
-	<classpathentry kind="lib" path="lib/javassist.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/alfresco-enterprise-repo-4.1.2.jar" sourcepath="/ALFRESCO_SDK_412/src/alfresco-enterprise-repository-src.zip"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/acegi-security-0.8.2_patched.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/quartz-1.8.3-patched.jar"/>
-	<classpathentry kind="var" path="ALFRESCO_SDK_412/lib/server/dependencies/jta.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/amp">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/properties/local">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>

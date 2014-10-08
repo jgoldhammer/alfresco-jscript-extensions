@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements.  See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License.  You may obtain a copy of the License at
+    	
+    http://www.apache.org/licenses/LICENSE-2.0
+    	
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<beans>
+    
+   <bean id="scriptAuthentication" parent="baseJavaScriptExtension"
+		class="de.jgoldhammer.alfresco.jscript.authentication.ScriptAuthentication">
+		<property name="extensionName" value="auth" />
+	</bean>
+
+	<bean id="scriptPolicies" parent="baseJavaScriptExtension"
+		class="de.jgoldhammer.alfresco.jscript.policy.ScriptPolicies">
+		<property name="extensionName" value="policies" />
+		<property name="namespaceService" ref="namespaceService" />
+		<property name="behaviourFilter" ref="policyBehaviourFilter" />
+	</bean>
+
+	<bean id="scriptTransactions" parent="baseJavaScriptExtension"
+		class="de.jgoldhammer.alfresco.jscript.transaction.ScriptTransactions">
+		<property name="extensionName" value="trans" />
+		<property name="transactionService" ref="TransactionService" />
+	</bean>
+
+	<bean id="jmxClientSciptFacade" parent="baseJavaScriptExtension"
+		class="de.jgoldhammer.alfresco.jscript.jmx.JmxClientScriptFacade">
+		<property name="extensionName" value="jmxClient" />
+		<property name="alfrescoMBeanServer" ref="alfrescoMBeanServer" />
+	</bean>
+
+
+	<bean id="jobScriptFacade" parent="baseJavaScriptExtension"
+		class="de.jgoldhammer.alfresco.jscript.jobs.JobsScriptFacade" init-method="init">
+		<property name="extensionName" value="jobs" />
+		<property name="alfrescoMBeanServer" ref="alfrescoMBeanServer" />
+	</bean>
+
+	<bean id="batchScriptFacade" parent="baseJavaScriptExtension"
+		class="de.jgoldhammer.alfresco.jscript.batch.BatchScriptFacade">
+		<property name="extensionName" value="batch" />
+		<property name="transactionService" ref="TransactionService" />
+		<property name="searchService" ref="SearchService" />
+		<property name="scriptService" ref="ScriptService" />
+		<property name="serviceRegistry" ref="ServiceRegistry" />
+	</bean>
+	
+	<bean id="scriptDatabase" parent="baseJavaScriptExtension"
+		class="de.jgoldhammer.alfresco.jscript.db.ScriptDatabaseService">
+		<property name="extensionName" value="database" />
+	</bean>
+	
+	<bean id="scriptAudit" parent="baseJavaScriptExtension"
+		class="de.jgoldhammer.alfresco.jscript.audit.ScriptAuditService">
+		<property name="extensionName" value="audit" />
+		<property name="auditService" ref="AuditService" />
+		
+	</bean>
+
+    
+</beans>

@@ -2,7 +2,6 @@ alfresco-jscript-extensions
 ===========================
 
 Alfresco repository module with helpful javascript root object extensions which are helpful in much scenarios.
-
 Following root objects are provided:
 * **auth**
 	* to change the authentication to another user during the javascript execution
@@ -10,8 +9,11 @@ Following root objects are provided:
 	* example: tbd
 		
 * **batch** 
-	* to provide s simple batch processing for javascript without any native functions
+	* to provide a simple batch processing for javascript without any native functions
 	* example: https://gist.github.com/jgoldhammer/6941273
+	
+* **database** 
+	* to provide access to datasources (contributed by Florian Maul)
 	 
 * **policies** 
 	* to temporarly disable or enable policy behavours during javascript extecution
@@ -37,6 +39,13 @@ Following root objects are provided:
 	* start, commit and rollback (database) transactions during the javascript execution
 	* example: tbd
  
+Building
+--------
+
+To build the module and its AMP / JAR files, run the following command from the base 
+project directory:
+
+    mvn install
 
 
 
