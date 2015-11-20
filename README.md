@@ -30,14 +30,32 @@ Following root objects are provided:
 	* start jobs in javascript via JMX
 	* example: https://gist.github.com/jgoldhammer/6941374
 
+* **repoAdmin** 
+	* uses the repo admin interpreter from the repo admin console
+	* write your commands and get back the result in the js-console
+	* example 1: ```print(repoAdmin.exec('help'))``` - show the help
+	* example 2: ```print(reopAdmin.exec('show models'));```  - show all additional datamodels
+
 * **solr** 
 	* currently get the index state of a node (currently not working due to a bug in the SolrIndexService)
 	* example: tbd
+	
+* **tenantAdmin** 
+	* uses the repo admin interpreter from the repo admin console
+	* write your commands and get back the result in the js-console
+	* example 1: ```print(tenantAdmin.exec('help'))``` - show the help
+	* example 2: ```print(tenantAdmin.exec('show tenants'));```  - show all tenants (if you create one before!)
 	
 * **trans** 
 	* create a new transaction
 	* start, commit and rollback (database) transactions during the javascript execution
 	* example: tbd
+	
+* **workflowAdmin** 
+	* uses the workflowinterpreter from the workflow console
+	* write your commands and get back the result in the js-console
+	* example 1: ```print(workflowAdmin.exec('help'))``` - show the help
+	* example 2: ```print(workflowAdmin.exec('show definitions'));```  - show all workflow definitions
  
 Building
 --------
