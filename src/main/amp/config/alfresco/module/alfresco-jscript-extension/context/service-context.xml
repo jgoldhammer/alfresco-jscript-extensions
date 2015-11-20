@@ -67,8 +67,24 @@
 		class="de.jgoldhammer.alfresco.jscript.audit.ScriptAuditService">
 		<property name="extensionName" value="audit" />
 		<property name="auditService" ref="AuditService" />
-		
 	</bean>
-
-    
+	
+	<bean id="scriptRepoAdminConsole" parent="baseJavaScriptExtension"
+		class="	de.jgoldhammer.alfresco.jscript.repoadmin.ScriptRepoAdminConsole">
+		<property name="extensionName" value="repoAdmin" />
+		<property name="repoAdminInterpreter" ref="repoAdminInterpreter" />
+	</bean>
+	
+	<bean id="scriptTenantAdminConsole" parent="baseJavaScriptExtension"
+		class="de.jgoldhammer.alfresco.jscript.tenant.ScriptTenantAdminConsole">
+		<property name="extensionName" value="tenantAdmin" />
+		<property name="tenantInterpreter" ref="tenantInterpreter" />
+	</bean>
+	
+	<bean id="scriptWorkflowConsole" parent="baseJavaScriptExtension"
+		class="de.jgoldhammer.alfresco.jscript.workflow.ScriptWorkflowConsole">
+		<property name="extensionName" value="workflowAdmin" />
+		<property name="workflowInterpreter" ref="workflowInterpreter" />
+	</bean>
+	
 </beans>
