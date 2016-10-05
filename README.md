@@ -1,6 +1,8 @@
 alfresco-jscript-extensions
 ===========================
 
+[![Build Status](https://travis-ci.org/jgoldhammer/alfresco-jscript-extensions.svg?branch=master)](https://travis-ci.org/jgoldhammer/alfresco-jscript-extensions)
+
 Alfresco repository module with helpful javascript root object extensions which are helpful in much scenarios.
 
 Usage
