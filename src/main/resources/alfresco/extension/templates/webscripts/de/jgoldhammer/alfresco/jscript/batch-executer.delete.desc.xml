@@ -1,0 +1,10 @@
+<webscript>
+    <shortname>Cancel a job executed by batch executer</shortname>
+    <description>
+        Cancel a job which is being executed by the batch executer
+    </description>
+    <url>/jscript/jobs/{jobId}</url>
+    <format default="html">any</format>
+    <authentication>admin</authentication>
+    <transaction>required</transaction>
+</webscript>

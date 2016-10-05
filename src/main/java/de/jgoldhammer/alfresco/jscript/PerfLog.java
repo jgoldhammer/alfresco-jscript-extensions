@@ -1,13 +1,10 @@
-/**
- * 
- */
 package de.jgoldhammer.alfresco.jscript;
-
-import java.text.MessageFormat;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import java.text.MessageFormat;
 
 /**
  * class for performance monitoring. create your instance via constructor, start
@@ -24,9 +21,8 @@ public class PerfLog {
 	private long startTime;
 
 	/**
-	 * 
 	 * @param logger
-	 *            the logger to log the performance mesaure
+	 *            the logger to log the performance
 	 */
 	public PerfLog(Log logger) {
 		if (logger != null) {
@@ -36,7 +32,7 @@ public class PerfLog {
 
 	/**
 	 * simple timelogger. If you want to log in your own logger instance, use
-	 * {@link #TimeLogger(Log)}.
+	 * {@link #PerfLog(Log)}.
 	 */
 	public PerfLog() {
 	}
@@ -44,8 +40,10 @@ public class PerfLog {
 	/**
 	 * start the logging
 	 * 
-	 * @param message
-	 * @param params
+	 * @param message the message or message template to log as start message (optional)
+	 * @param params the params of the message
+	 * @return a new perflog instance.
+	 *
 	 */
 	public PerfLog start(String message, Object... params) {
 		if (LOG.isInfoEnabled() || LOG.isWarnEnabled()) {
@@ -59,16 +57,19 @@ public class PerfLog {
 
 	/**
 	 * start the logging
+	 * @return a new perflog instance.
+	 *
 	 */
 	public PerfLog start() {
 		return start(null, (Object) null);
 	}
 
 	/**
-	 * @param assertPerformanceOf
-	 * @param message
-	 * @param params
-	 * @return the measured time
+	 * @param assertPerformanceOf if the duration of the function is over this limit, the log message will be logged as warning!
+	 * @param message message or message template to log as stop message
+	 * @param params params for the message template
+	 * @return the performance in milliseconds
+	 *
 	 */
 	public long stop(int assertPerformanceOf, String message, Object... params) {
 		long endTime = System.currentTimeMillis();
@@ -93,6 +94,8 @@ public class PerfLog {
 	 * @param message
 	 *            the message to log in the log statement.
 	 * @param params
+	 *       params for the message template
+	 * @return the performance in milliseconds
 	 */
 	public long stop(String message, Object... params) {
 		return stop(DEFAULT_ASSERT_PERFORMANCE, message, params);

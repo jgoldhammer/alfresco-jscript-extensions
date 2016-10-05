@@ -1,20 +1,19 @@
 package de.jgoldhammer.alfresco.jscript.jmx;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Map;
+import org.alfresco.repo.jscript.NativeMap;
+import org.alfresco.repo.processor.BaseProcessorExtension;
 
 import javax.management.JMException;
 import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
-
-import org.alfresco.repo.jscript.NativeMap;
-import org.alfresco.repo.processor.BaseProcessorExtension;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Map;
 
 /**
- * wraps some simple jmx functions
+ * wraps some simple de.jgoldhammer.alfresco.jscript.jmx functions
  *
  * @author jgoldhammer
  *

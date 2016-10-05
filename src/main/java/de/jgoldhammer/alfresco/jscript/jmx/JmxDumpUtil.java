@@ -18,28 +18,16 @@
  */
 package de.jgoldhammer.alfresco.jscript.jmx;
 
+import org.apache.commons.lang.StringUtils;
+
+import javax.management.*;
+import javax.management.openmbean.CompositeData;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
-import javax.management.JMException;
-import javax.management.MBeanAttributeInfo;
-import javax.management.MBeanInfo;
-import javax.management.MBeanServerConnection;
-import javax.management.ObjectName;
-import javax.management.openmbean.CompositeData;
-
-import org.apache.commons.lang.StringUtils;
+import java.util.*;
 
 /**
  * A utility class providing a method to dump a local or remote MBeanServer's
@@ -49,6 +37,7 @@ import org.apache.commons.lang.StringUtils;
  * @author dward
  */
 public class JmxDumpUtil {
+
 	/** Table header for attribute names. */
 	private static final String NAME_HEADER = "Attribute Name";
 
@@ -118,6 +107,8 @@ public class JmxDumpUtil {
 	 *            the object name
 	 * @param out
 	 *            PrintWriter to write the output to
+	 * @param attributeName
+	 * 				the name of the attribute to read
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 * @throws JMException
@@ -164,12 +155,11 @@ public class JmxDumpUtil {
 	 *            the server connection (or server itself)
 	 * @param objectName
 	 *            the object name
-	 * @param out
-	 *            PrintWriter to write the output to
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 * @throws JMException
 	 *             Signals a JMX error
+	 * @return the result map
 	 */
 	public static Map<Object, Object> getSimpleMBeanInfo(MBeanServerConnection connection, ObjectName objectName) throws IOException,
 			JMException {
@@ -222,7 +212,7 @@ public class JmxDumpUtil {
 	}
 
 	/**
-	 * Tabulates a given String -> Object Map.
+	 * Tabulates a given String - Object Map.
 	 * 
 	 * @param keyHeader
 	 *            the key header

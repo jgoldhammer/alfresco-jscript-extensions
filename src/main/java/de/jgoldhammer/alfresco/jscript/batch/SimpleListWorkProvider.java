@@ -3,19 +3,18 @@
  */
 package de.jgoldhammer.alfresco.jscript.batch;
 
+import org.alfresco.repo.batch.BatchProcessWorkProvider;
+import org.alfresco.service.cmr.repository.NodeRef;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import org.alfresco.repo.batch.BatchProcessWorkProvider;
-import org.alfresco.service.cmr.repository.NodeRef;
 
 
 /**
  * a simple list based batch process work provider.
  *
  * @author Jens Goldhammer
- * @param <T>
  *
  */
 public class SimpleListWorkProvider implements BatchProcessWorkProvider<Collection<NodeRef>> {
@@ -26,7 +25,10 @@ public class SimpleListWorkProvider implements BatchProcessWorkProvider<Collecti
 	private int index = 0;
 
     /**
-     *
+     * @param simpleList
+	 * 			the list of the noderefs
+	 * @param  listSize
+	 * 			the size of the list
      */
     public SimpleListWorkProvider(List<NodeRef> simpleList, final int listSize) {
         this.simpleList = simpleList;
@@ -34,6 +36,9 @@ public class SimpleListWorkProvider implements BatchProcessWorkProvider<Collecti
 		this.size = this.simpleList.size();
     }
 
+    /**
+ 	* the size of the simple list.
+ 	*/
     public int getTotalEstimatedWorkSize() {
         return simpleList.size();
     }

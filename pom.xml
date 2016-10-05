@@ -4,156 +4,452 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.jgoldhammer</groupId>
     <artifactId>alfresco-jscript-extension</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>alfresco-jscript-extension Repository AMP project</name>
-    <packaging>amp</packaging>
-    <description>Manages the lifecycle of the alfresco-jscript-extension Repository AMP (Alfresco Module Package)</description>
+    <version>1.0</version>
+    <name>Alfresco Jscript Repository Extensions</name>
+    <description>This module contains some useful Alfresco repository Javascript Objects which can be used to develop alfresco repository extensions. Most of them reuse functionality from the public service api of Alfresco.</description>
+    <url>https://github.com/jgoldhammer/alfresco-jscript-extensions</url>
+    <packaging>jar</packaging>
 
-    <parent>
-        <groupId>org.alfresco.maven</groupId>
-        <artifactId>alfresco-sdk-parent</artifactId>
-        <version>2.1.1</version>
-    </parent>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
 
-    <!-- 
-        SDK properties have sensible defaults in the SDK parent,
-        but you can override the properties below to use another version.
-        For more available properties see the alfresco-sdk-parent POM.
-       -->
+    <scm>
+        <connection>scm:git:git@github.com:jgoldhammer/alfresco-jscript-extensions.git</connection>
+        <developerConnection>scm:git:git@github.com:jgoldhammer/alfresco-jscript-extensions.git</developerConnection>
+        <url>git@github.com:jgoldhammer/alfresco-jscript-extensions.git</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>j.goldhammer</id>
+            <name>Jens Goldhammer</name>
+            <email>j.goldhammer@fme.de</email>
+            <organization>fme AG</organization>
+            <organizationUrl>http://www.fme.de</organizationUrl>
+            <roles>
+                <role>Founder</role>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <properties>
+                <twitter>twitter.com/jensWr</twitter>
+            </properties>
+        </developer>
+    </developers>
+
     <properties>
-        <!-- The following are default values for data location and Alfresco Community version.
-             Uncomment if you need to change (Note. current default version for Enterprise edition is 5.0.1)
-          <alfresco.version>5.0.d</alfresco.version>
-          <alfresco.data.location>/absolute/path/to/alf_data_dev</alfresco.data.location> -->
 
-        <!-- This control the root logging level for all apps uncomment and change, defaults to WARN
-            <app.log.root.level>WARN</app.log.root.level>
-        -->
+        <sonatypeOssDistMgmtSnapshotsUrl>https://oss.sonatype.org/content/repositories/snapshots/</sonatypeOssDistMgmtSnapshotsUrl>
 
-        <!-- Set the enviroment to use, this controls which properties will be picked in src/test/properties
-             for embedded run, defaults to the 'local' environment. See SDK Parent POM for more info.
-        <env>local</env>
-        -->
+            <!-- Alfresco Maven Plugin version to use -->
+            <alfresco.sdk.version>3.0.0-beta-4</alfresco.sdk.version>
+
+            <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+            <!-- Alfresco Data directory, which will contain:
+                    Content Store (i.e. the files we upload)
+                    Database (i.e. the metadata for the uploaded files)
+                    Search index (i.e. the indexed content and metadata)
+                 Configured in alfresco-global.properties with the 'dir.root' property.
+                    -->
+            <alfresco.data.location>${session.executionRootDirectory}/alf_data_dev</alfresco.data.location>
+
+            <!-- Duplicated with alfresco.solrHome in the plugin, we need them out here to do filtering -->
+            <solr.home>${alfresco.data.location}/solr</solr.home>
+            <solr.model.dir>${solr.home}/alfrescoModels</solr.model.dir>
+            <solr.content.dir>${solr.home}/index</solr.content.dir>
+
+            <!-- Properties used in dependency declarations, you don't need to change these -->
+            <alfresco.groupId>org.alfresco</alfresco.groupId>
+            <!-- Platform WAR artifact, change to 'alfresco-enterprise' if using Enterprise Edition -->
+            <alfresco.platform.war.artifactId>alfresco-platform</alfresco.platform.war.artifactId>
+
+            <!-- Alfresco Platform webapp version, this is the original Alfresco webapp that will be
+                customized and then deployed and run by the tomcat maven plugin when
+                executing for example $ mvn clean install alfresco:run -->
+            <alfresco.platform.version>5.2.b-EA</alfresco.platform.version>
+            <!-- Alfresco Share version, so we can bring in correct alfresco-share-services artifact -->
+            <alfresco.share.version>5.2.a-EA</alfresco.share.version>
+
+            <!-- JRebel Hot reloading of classpath stuff and web resource stuff -->
+            <jrebel.version>1.1.6</jrebel.version>
+
+            <!-- Environment to use, Alfresco Maven Plugin will
+                 copy alfresco-global-*.properties files from this directory, such as src/test/properties/local -->
+            <env>local</env>
+
+            <!-- Compile with Java 7, default is 5 -->
+            <maven.compiler.source>1.8</maven.compiler.source>
+            <maven.compiler.target>1.8</maven.compiler.target>
+
     </properties>
 
-    <!-- Here we realize the connection with the Alfresco selected platform 
-        (e.g.version and edition) -->
+    <!-- This will import the dependencyManagement for all artifacts in the selected Alfresco platform.
+            NOTE: You still need to define dependencies in your POM,
+            but you can omit version as it's enforced by this dependencyManagement.
+            NOTE: It defaults to the latest version this SDK pom has been tested with,
+            but alfresco version can/should be overridden in your project's pom
+    -->
     <dependencyManagement>
         <dependencies>
-            <!-- Setup what versions of the different Alfresco artifacts that will be used (depends on alfresco.version),
-                 so we don't have to specify version in any of the dependency definitions in our POM.
-                 For more info see:
-                    http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies
-            -->
             <dependency>
                 <groupId>${alfresco.groupId}</groupId>
                 <artifactId>alfresco-platform-distribution</artifactId>
-                <version>${alfresco.version}</version>
+                <version>${alfresco.platform.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
+
     <dependencies>
-        <!-- Following dependencies are needed for compiling Java code in src/main/java;
-             <scope>provided</scope> is inherited for each of the following;
-             for more info, please refer to alfresco-platform-distribution POM -->
+        <!-- The main Alfresco Repo dependency for compiling Java code in src/main/java -->
         <dependency>
             <groupId>${alfresco.groupId}</groupId>
             <artifactId>alfresco-repository</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>3.2.17.RELEASE</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.sling/org.apache.sling.junit.remote -->
+        <dependency>
+            <groupId>com.tradeshift</groupId>
+            <artifactId>junit-remote</artifactId>
+            <version>3</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.192</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${alfresco.groupId}</groupId>
+            <artifactId>alfresco-repository</artifactId>
+            <version>${alfresco.platform.version}</version>
+            <classifier>h2scripts</classifier>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>${alfresco.groupId}</groupId>
+            <artifactId>alfresco-repository</artifactId>
+            <version>${alfresco.platform.version}</version>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
     </dependencies>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+
+            <!--
+                The Alfresco Maven Plugin contains all the logic to run the extension
+                in an embedded Tomcat with the H2 database.
+                -->
+            <plugin>
+                <groupId>org.alfresco.maven.plugin</groupId>
+                <artifactId>alfresco-maven-plugin</artifactId>
+                <version>${alfresco.sdk.version}</version>
+                <configuration>
+                    <!-- Default is to run with a Community edition, change to 'enterprise' if using Enterprise edition -->
+                    <alfrescoEdition>community</alfrescoEdition>
+
+                    <!-- We need the flat file H2 database to run the Repo -->
+                    <enableH2>true</enableH2>
+                    <!-- This is a platform extension JAR, so we need the platform webapp (alfresco.war) -->
+                    <enablePlatform>true</enablePlatform>
+                    <!-- Enable Solr so we can use search, our Repo extension probably need search -->
+                    <enableSolr>true</enableSolr>
+                    <!-- We don't need the share.war if we don't have any UI extensions -->
+                    <enableShare>true</enableShare>
+
+                    <!--
+                       JARs and AMPs that should be overlayed/applied to the Platform/Repository WAR
+                       (i.e. alfresco.war)
+                       -->
+                    <platformModules>
+                        <!-- This AMP is needed if we are going to access the platform webapp from a Share webapp -->
+                        <moduleDependency>
+                            <groupId>${alfresco.groupId}</groupId>
+                            <artifactId>alfresco-share-services</artifactId>
+                            <version>${alfresco.share.version}</version>
+                            <type>amp</type>
+                        </moduleDependency>
+
+                        <moduleDependency>
+                            <groupId>de.fmaul</groupId>
+                            <artifactId>javascript-console-repo</artifactId>
+                            <version>0.6</version>
+                            <type>amp</type>
+                        </moduleDependency>
+
+                        <!-- Bring in this JAR project, need to be included here, otherwise resources from META-INF
+                             will not be loaded, such as the test.html page
+                        -->
+                        <moduleDependency>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}</artifactId>
+                            <version>${project.version}</version>
+                        </moduleDependency>
+
+                    </platformModules>
+                    <shareModules>
+                        <moduleDependency>
+                            <groupId>de.fmaul</groupId>
+                            <artifactId>javascript-console-share</artifactId>
+                            <version>0.6</version>
+                            <type>amp</type>
+                        </moduleDependency>
+                    </shareModules>
+                </configuration>
+            </plugin>
+
+            <!-- Build an AMP if 3rd party libs are needed by the extension -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>build-amp-file</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptor>src/main/assembly/amp.xml</descriptor>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.alfresco.maven.plugin</groupId>
+                        <artifactId>alfresco-maven-plugin</artifactId>
+                        <version>${alfresco.sdk.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!-- Hot reloading with JRebel -->
+            <plugin>
+                <groupId>org.zeroturnaround</groupId>
+                <artifactId>jrebel-maven-plugin</artifactId>
+                <version>${jrebel.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-rebel-xml</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- For more information about how to configure JRebel plugin see:
+                         http://manuals.zeroturnaround.com/jrebel/standalone/maven.html#maven-rebel-xml -->
+                    <classpath>
+                        <fallback>all</fallback>
+                        <resources>
+                            <resource>
+                                <!--
+                                Empty resource element marks default configuration. By
+                                default it is placed first in generated configuration.
+                                -->
+                            </resource>
+                        </resources>
+                    </classpath>
+
+                    <!--
+                      alwaysGenerate - default is false
+                      If 'false' - rebel.xml is generated if timestamps of pom.xml and the current rebel.xml file are not equal.
+                      If 'true' - rebel.xml will always be generated
+                    -->
+                    <alwaysGenerate>true</alwaysGenerate>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <nonFilteredFileExtensions> <!-- jpg, jpeg, gif, bmp and png are added automatically -->
+                        <nonFilteredFileExtension>ftl</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>acp</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>svg</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>doc</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>docx</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>xls</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>xlsx</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>ppt</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>pptx</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>bin</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>lic</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>swf</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>zip</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>msg</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>jar</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>eot</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>css</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>ico</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>psd</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>js</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <!-- Filter the resource files in this project and do property substitutions -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <!-- Filter the test resource files in this project and do property substitutions -->
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+    </build>
+
     <profiles>
-        <!--
-            Brings in the extra Enterprise specific repository classes,
-            if the 'enterprise' profile has been activated, needs to be activated manually.
-            -->
         <profile>
-            <id>enterprise</id>
-            <dependencies>
-                <dependency>
-                    <groupId>${alfresco.groupId}</groupId>
-                    <artifactId>alfresco-enterprise-repository</artifactId>
-                    <version>${alfresco.version}</version>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <!-- plugin for publishing maven artifacts-->
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.4</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <configuration>
+                            <useAgent>false</useAgent>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
-		
-		<profile>
-			<id>installable-jar</id>
-			<build>
-				<plugins>
-					<!-- Build alternative artifacts (installable JAR, overlay WAR) -->
-					<plugin>
-						<artifactId>maven-assembly-plugin</artifactId>
-						<version>2.4</version>
-						<configuration>
-							<appendAssemblyId>false</appendAssemblyId>
-							<attach>false</attach>
-						</configuration>
-						<executions>
-							<execution>
-								<id>make-installable-jar</id>
-								<phase>package</phase>
-								<goals>
-									<goal>single</goal>
-								</goals>
-								<configuration>
-									<classifier>installable</classifier>
-									<finalName>${project.build.finalName}-installable</finalName>
-									<descriptor>src/main/assembly/installable-jar.xml</descriptor>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-					<!-- Attach alternative artifacts -->
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>build-helper-maven-plugin</artifactId>
-						<version>1.8</version>
-						<executions>
-							<execution>
-								<id>attach-artifacts</id>
-								<phase>package</phase>
-								<goals>
-									<goal>attach-artifact</goal>
-								</goals>
-								<configuration>
-									<artifacts>
-										<artifact>
-											<file>${project.build.directory}/${project.build.finalName}-installable.jar</file>
-											<type>jar</type>
-											<classifier>installable</classifier>
-										</artifact>
-									</artifacts>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-        <!--
-            If the 'amp-to-war' profile is enabled then make sure to bring in the alfresco-rad module,
-            which has the H2 scripts and other RAD features.
-
-            TODO: TO INVESTIGATE: This dependency is already defined in the parent SDK pom in the 'amp-to-war' profile
-                  but this does not work, it is not include...
-
-        <profile>
-            <id>amp-to-war</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.alfresco.maven</groupId>
-                    <artifactId>alfresco-rad</artifactId>
-                    <version>${maven.alfresco.version}</version>
-                </dependency>
-            </dependencies>
-        </profile> -->
     </profiles>
+
+    <repositories>
+        <repository>
+            <id>alfresco-public</id>
+            <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>alfresco-public-snapshots</id>
+            <url>https://artifacts.alfresco.com/nexus/content/groups/public-snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </repository>
+        <!-- Alfresco Enterprise Edition Artifacts, put username/pwd for server in settings.xml -->
+        <repository>
+            <id>alfresco-private-repository</id>
+            <url>https://artifacts.alfresco.com/nexus/content/groups/private</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>alfresco-plugin-public</id>
+            <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>alfresco-plugin-public-snapshots</id>
+            <url>https://artifacts.alfresco.com/nexus/content/groups/public-snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
 </project>

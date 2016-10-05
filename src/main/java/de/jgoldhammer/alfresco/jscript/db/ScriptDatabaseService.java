@@ -1,11 +1,5 @@
 package de.jgoldhammer.alfresco.jscript.db;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
 import org.alfresco.error.AlfrescoRuntimeException;
 import org.alfresco.repo.processor.BaseProcessorExtension;
 import org.springframework.beans.BeansException;
@@ -14,6 +8,11 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.extensions.webscripts.annotation.ScriptClass;
 import org.springframework.extensions.webscripts.annotation.ScriptClassType;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
+
+import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * javascript rootobject

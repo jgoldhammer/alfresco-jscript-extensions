@@ -3,17 +3,17 @@
  */
 package de.jgoldhammer.alfresco.jscript.batch;
 
+import org.alfresco.repo.batch.BatchProcessWorkProvider;
+import org.alfresco.service.cmr.repository.NodeRef;
+import org.alfresco.service.cmr.search.ResultSet;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.alfresco.repo.batch.BatchProcessWorkProvider;
-import org.alfresco.service.cmr.repository.NodeRef;
-import org.alfresco.service.cmr.search.ResultSet;
-
 /**
- * a batch process worker which iterates over the query result and provides a
+ * a de.jgoldhammer.alfresco.jscript.batch process worker which iterates over the query result and provides a
  * list of size {@link #collectSize} as next work.
  * 
  * @author jgoldhammer

@@ -3,15 +3,10 @@
  */
 package de.jgoldhammer.alfresco.jscript.transaction;
 
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
-import javax.transaction.UserTransaction;
+import javax.transaction.*;
 
 /**
- * deals with the transaction object.
+ * deals with the de.jgoldhammer.alfresco.jscript.transaction object.
  *
  * @author jgoldhammer
  *
@@ -37,6 +32,10 @@ public class ScriptTransaction {
 			userTransaction.rollback();
 	}
 
+	/**
+	 * @return status value (see javax/transaction/Status.class)
+	 * @throws SystemException
+	 */
 	public int getStatus() throws SystemException{
 		return userTransaction.getStatus();
 	}

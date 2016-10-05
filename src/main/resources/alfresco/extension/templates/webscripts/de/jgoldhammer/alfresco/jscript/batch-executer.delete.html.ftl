@@ -1,0 +1,1 @@
+Job ${jobId} was <#if !canceled>not</#if> canceled

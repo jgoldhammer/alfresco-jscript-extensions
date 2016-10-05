@@ -16,7 +16,7 @@ import org.springframework.extensions.webscripts.annotation.ScriptMethodType;
  * @author Jens Goldhammer (fme AG)
  */
 
-@ScriptClass(types=ScriptClassType.JavaScriptRootObject, code="auth", help="the root object for the authentication util to switch the authenticated user ")
+@ScriptClass(types=ScriptClassType.JavaScriptRootObject, code="auth", help="the root object for the de.jgoldhammer.alfresco.jscript.authentication util to switch the authenticated user ")
 public class ScriptAuthentication extends BaseProcessorExtension {
 
 	@ScriptMethod(
@@ -38,7 +38,7 @@ public class ScriptAuthentication extends BaseProcessorExtension {
     }
 
     @ScriptMethod(
-    		help="Get the user that is currently in effect for purposes of authentication.  This includes any overlays introduced by auth.runAsUser(<username>).",
+    		help="Get the user that is currently in effect for purposes of de.jgoldhammer.alfresco.jscript.authentication.  This includes any overlays introduced by auth.runAsUser(<username>).",
     		output="void",
     		code="auth.getRunAsUser()",
     		type=ScriptMethodType.READ)
@@ -48,7 +48,7 @@ public class ScriptAuthentication extends BaseProcessorExtension {
     }
 
     @ScriptMethod(
-    		help="Get the fully authenticated user. It returns the name of the user that last authenticated and excludes any overlay authentication set",
+    		help="Get the fully authenticated user. It returns the name of the user that last authenticated and excludes any overlay de.jgoldhammer.alfresco.jscript.authentication set",
     		output="void",
     		code="auth.getFullyAuthenticatedUser();",
     		type=ScriptMethodType.READ)

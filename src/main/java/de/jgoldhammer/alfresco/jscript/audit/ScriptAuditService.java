@@ -3,18 +3,20 @@
  */
 package de.jgoldhammer.alfresco.jscript.audit;
 
-import java.io.Serializable;
-import java.util.Map;
-
+import com.google.common.collect.Maps;
 import org.alfresco.repo.jscript.BaseScopableProcessorExtension;
 import org.alfresco.service.cmr.audit.AuditQueryParameters;
 import org.alfresco.service.cmr.audit.AuditService;
 import org.alfresco.service.cmr.audit.AuditService.AuditQueryCallback;
 import org.apache.commons.lang.StringUtils;
 
-import com.google.common.collect.Maps;
+import java.io.Serializable;
+import java.util.Map;
 
 /**
+ * ScriptAuditService is a wrapper around the Auditservice of Alfresco. It allows to enable/disable the auditservice,
+ * query the auditservice and clearing the audit entries of a given app.
+ *
  * @author jgoldhammer
  * 
  */
@@ -43,24 +45,27 @@ public class ScriptAuditService extends BaseScopableProcessorExtension {
 		auditService.setAuditEnabled(false);
 	}
 
+	public Map<String, AuditService.AuditApplication> getApplications(){
+		return auditService.getAuditApplications();
+	}
+
 	public void clearAll(String appName) {
 		auditService.clearAudit(appName, null, null);
 	}
 
 	/**
-	 * Remove audit entries for the given application between the time ranges.
+	 * Remove .audit entries for the given application between the time ranges.
 	 * If no start time is given then entries are deleted as far back as they
 	 * exist. If no end time is given then entries are deleted up until the
 	 * current time.
 	 * 
-	 * @param applicationName
+	 * @param appName
 	 *            the name of the application for which to remove entries
-	 * @param fromTime
+	 * @param start
 	 *            the start time of entries to remove (inclusive and optional)
-	 * @param toTime
+	 * @param end
 	 *            the end time of entries to remove (exclusive and optional)
-	 * @return Returns the number of audit entries deleted
-	 * 
+	 *
 	 * @since 3.4
 	 **/
 	public void clear(String appName, long start, long end) {
@@ -70,22 +75,7 @@ public class ScriptAuditService extends BaseScopableProcessorExtension {
 	/**
 	 * Issue an audit query using the given parameters and consuming results.
 	 * Results are returned in entry order, corresponding to time order.
-	 * 
-	 * @param appName
-	 * 
-	 * @param parameters
-	 * 
-	 * @param maxResults
-	 *            the maximum number of results to retrieve (zero or negative to
-	 *            ignore)
-	 * 
-	 *            private boolean forward; private String applicationName;
-	 *            private String user; private Long fromId; private Long toId;
-	 *            private Long fromTime; private Long toTime; private
-	 *            List<Pair<String, Serializable>> searchKeyValues;
-	 */
-
-	/**
+	 *
 	 * @param appName
 	 *            if not null, find entries logged against this application
 	 * @param user

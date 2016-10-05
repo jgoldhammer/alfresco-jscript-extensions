@@ -1,0 +1,10 @@
+<webscript>
+    <shortname>Get list o JavaScript obs</shortname>
+    <description>
+        Get a list of d.jobs being currently executed
+    </description>
+    <url>/jscript/jobs</url>
+    <format default="html">any</format>
+    <authentication>admin</authentication>
+    <transaction>required</transaction>
+</webscript>

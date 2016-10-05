@@ -1,9 +1,5 @@
 package de.jgoldhammer.alfresco.jscript.batch;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
 import org.alfresco.repo.batch.BatchProcessor.BatchProcessWorker;
 import org.alfresco.repo.jscript.ScriptNode;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
@@ -14,8 +10,12 @@ import org.apache.commons.lang.StringUtils;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+
 /**
- * a batch process worker which uses the scriptservice to execute the provided script for a set of nodes.
+ * a de.jgoldhammer.alfresco.jscript.batch process worker which uses the scriptservice to execute the provided script for a set of nodes.
  *
  * @author jgoldhammer
  *

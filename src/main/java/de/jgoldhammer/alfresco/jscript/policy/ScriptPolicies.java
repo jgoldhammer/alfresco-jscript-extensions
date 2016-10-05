@@ -19,7 +19,7 @@ import org.springframework.extensions.webscripts.annotation.ScriptMethodType;
  * @author Jens Goldhammer (fme AG)
  */
 
-@ScriptClass(types=ScriptClassType.JavaScriptRootObject, code="policy", help="the root object for the policy/behaviourFilter")
+@ScriptClass(types=ScriptClassType.JavaScriptRootObject, code= "de/jgoldhammer/alfresco/jscript/policy", help="the root object for the de.jgoldhammer.alfresco.jscript.policy/behaviourFilter")
 public class ScriptPolicies extends BaseProcessorExtension {
     private BehaviourFilter behaviourFilter;
     private NamespaceService namespaceService;
@@ -35,7 +35,7 @@ public class ScriptPolicies extends BaseProcessorExtension {
     @ScriptMethod(
     		help="eanbles the behaviour for the given scriptnode",
     		output="void",
-    		code="policy.enableFor(node);",
+    		code="de.jgoldhammer.alfresco.jscript.policy.enableFor(node);",
     		type=ScriptMethodType.READ)
     public void enableForNode(ScriptNode node){
     	behaviourFilter.enableBehaviour(node.getNodeRef());
@@ -44,30 +44,49 @@ public class ScriptPolicies extends BaseProcessorExtension {
     @ScriptMethod(
     		help="eanbles the behaviour for the given scriptnode",
     		output="void",
-    		code="policy.enableFor(node);",
+    		code="de.jgoldhammer.alfresco.jscript.policy.enableFor(node);",
     		type=ScriptMethodType.READ)
     public void enableForTypeOrAspect(String shortQName){
     	behaviourFilter.enableBehaviour(QName.resolveToQName(namespaceService, shortQName));
+
     }
 
     @ScriptMethod(
     		help="eanbles the behaviour for the given scriptnode",
     		output="void",
-    		code="policy.enableFor(node);",
+    		code="de.jgoldhammer.alfresco.jscript.policy.enableFor(node);",
     		type=ScriptMethodType.READ)
 
-    public void diasbleForTypeOrAspect(String shortQName){
+    public void disableForTypeOrAspect(String shortQName){
     	behaviourFilter.disableBehaviour(QName.resolveToQName(namespaceService, shortQName));
     }
 
+	@ScriptMethod(
+			help="eanbles all behaviours for the current transaction ",
+			output="void",
+			code="policy.enableAll;",
+			type=ScriptMethodType.READ)
+
+	public void enableAll(){
+		behaviourFilter.enableBehaviour();
+	}
+
 
     @ScriptMethod(
-    		help="disables the behaviour for the given scriptnode",
+    		help="disables all behaviour for the given scriptnode",
     		output="void",
-    		code="policy.disableFor(node);",
+    		code="de.jgoldhammer.alfresco.jscript.policy.disableFor(node);",
     		type=ScriptMethodType.READ)
     public void disableForNode(ScriptNode node){
-    	behaviourFilter.disableBehaviour(node.getNodeRef());
-    }
+		behaviourFilter.disableBehaviour(node.getNodeRef());
+	}
+	@ScriptMethod(
+			help="disables all behaviour for the given scriptnode",
+			output="void",
+			code="de.jgoldhammer.alfresco.jscript.policy.disableFor(node);",
+			type=ScriptMethodType.READ)
+	public void isAltered(){
+		behaviourFilter.isActivated();
+	}
 
 }

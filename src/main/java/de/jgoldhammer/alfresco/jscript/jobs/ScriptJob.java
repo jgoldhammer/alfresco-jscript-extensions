@@ -3,14 +3,10 @@
  */
 package de.jgoldhammer.alfresco.jscript.jobs;
 
-import javax.management.InstanceNotFoundException;
-import javax.management.MBeanException;
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
-import javax.management.ReflectionException;
-
 import org.apache.commons.lang.StringUtils;
 import org.quartz.SchedulerException;
+
+import javax.management.*;
 
 /**
  * class representing a java class

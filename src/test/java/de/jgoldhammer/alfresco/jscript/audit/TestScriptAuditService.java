@@ -3,20 +3,19 @@
  */
 package de.jgoldhammer.alfresco.jscript.audit;
 
-import java.util.Map;
-
-import junit.framework.Assert;
-
+import com.tradeshift.test.remote.Remote;
+import com.tradeshift.test.remote.RemoteTestRunner;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
+import org.alfresco.service.cmr.audit.AuditService;
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.tradeshift.test.remote.Remote;
-import com.tradeshift.test.remote.RemoteTestRunner;
+import java.util.Map;
 
 /**
  * @author jgoldhammer
@@ -32,7 +31,6 @@ public class TestScriptAuditService {
     @Autowired
     protected ScriptAuditService scriptAuditService;
     
-    @SuppressWarnings("deprecation")
 	@Test
     public void testIsAuditEnabled() {
     	AuthenticationUtil.setFullyAuthenticatedUser("admin");
@@ -41,13 +39,35 @@ public class TestScriptAuditService {
     }
     
  
-    @SuppressWarnings("deprecation")
 	@Test
     public void testQueryWithAlfNode() {
     	AuthenticationUtil.setFullyAuthenticatedUser("admin");
-    	Map<String, ScriptAuditValue> query2 = scriptAuditService.query(null, null, null, null, null, null, null, null);
-    	System.out.println(query2);
-    	Assert.assertNotNull(query2);
+    	Map<String, ScriptAuditValue> results = scriptAuditService.query(null, null, null, null, null, null, null, null);
+    	System.out.println(results);
+    	Assert.assertNotNull(results);
     }
+
+	@Test
+	public void testDisableAndEnableAll(){
+		AuthenticationUtil.setFullyAuthenticatedUser("admin");
+		scriptAuditService.disableAll();
+		boolean allEnabled = scriptAuditService.isAllEnabled();
+		Assert.assertFalse(allEnabled);
+
+		scriptAuditService.enableAll();
+		 allEnabled = scriptAuditService.isAllEnabled();
+		Assert.assertTrue(allEnabled);
+	}
+
+	@Test
+	public void testGetApplications(){
+		AuthenticationUtil.setAdminUserAsFullyAuthenticatedUser();
+		AuditService.AuditApplication auditApp = scriptAuditService.getApplications().entrySet().iterator().next().getValue();
+
+		Assert.assertTrue(auditApp.getKey().contains("/tagging"));
+		Assert.assertTrue(auditApp.getName().contains("Alfresco Tagging Service"));
+		Assert.assertTrue(auditApp.isEnabled()==true);
+
+	}
     
 }

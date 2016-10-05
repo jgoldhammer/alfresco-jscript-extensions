@@ -11,14 +11,16 @@ import org.springframework.extensions.webscripts.annotation.ScriptMethod;
 import org.springframework.extensions.webscripts.annotation.ScriptMethodType;
 
 /**
- * script object for handling the transaction service.
+ * script object for handling the de.jgoldhammer.alfresco.jscript.transaction service.
  *
  * @author Jens Goldhammer (fme AG)
  */
 
-@ScriptClass(types=ScriptClassType.JavaScriptRootObject, code="transaction", help="the root object for the policy/behaviourFilter")
+@ScriptClass(types=ScriptClassType.JavaScriptRootObject, code= "transaction", help="the root object for the transactionservice")
 public class ScriptTransactions extends BaseProcessorExtension {
-    private TransactionService transactionService;
+
+	private TransactionService transactionService;
+
     public void setTransactionService(TransactionService transactionService) {
 		this.transactionService = transactionService;
 	}
@@ -26,7 +28,7 @@ public class ScriptTransactions extends BaseProcessorExtension {
     @ScriptMethod(
     		help="get a new user transaction object- the transaction is not started yet. Please execute begin, commit, rollback and getStatus on the transaction.",
     		output="void",
-    		code="transaction.getUserTransaction()",
+    		code="de.jgoldhammer.alfresco.jscript.transaction.getUserTransaction()",
     		type=ScriptMethodType.WRITE)
     public ScriptTransaction getUserTransaction(){
     	return new ScriptTransaction(transactionService.getUserTransaction());
