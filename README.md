@@ -43,7 +43,6 @@ Alfresco SDK 3.x
         	</moduleDependency>
 	</platformModules>
    
-
 Following root objects are provided:
 * **auth**
 	* to change the authentication to another user during the javascript execution
