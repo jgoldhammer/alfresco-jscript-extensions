@@ -26,15 +26,9 @@ public class ScriptLinkServiceTest extends BaseAlfrescoTest {
 
 	@Before
 	public void init(){
-		AuthenticationUtil.setRunAsUserSystem();
-		transactionHelper.doInTransaction(new RetryingTransactionHelper.RetryingTransactionCallback<Void>() {
-			@Override
-			public Void execute() throws Throwable {
-				documentId = generateTempDocument();
-				tempFolder = generateTempFolder();
-				return null;
-			}
-		});
+		AuthenticationUtil.setAdminUserAsFullyAuthenticatedUser();
+		documentId = generateTempDocument();
+		tempFolder = generateTempFolder();
 
 	}
 

@@ -36,6 +36,7 @@ public class ScriptLinkService extends BaseScopableProcessorExtension{
 	 * creates a link from the source to the target
 	 * @param source the document to link in another folder
 	 * @param targetFolder folder the document should be linked to.
+	 * @return the created link as script node
 	 */
 	public ScriptNode createLink(ScriptNode source, ScriptNode targetFolder){
 		Preconditions.checkNotNull(source);
@@ -48,6 +49,7 @@ public class ScriptLinkService extends BaseScopableProcessorExtension{
 	 * delete all links of the given document.
 	 *
 	 * @param source - document or folder to delete all links for.
+	 *               @return the deletelinkstatusreport object which holds information about the deletion
 	 */
 	public DeleteLinksStatusReport deleteLinks(ScriptNode source){
 		Preconditions.checkNotNull(source);

@@ -64,8 +64,8 @@ public class ScriptRenditionService  extends BaseScopableProcessorExtension {
 
 	/**
 	 * returns the source node if the rendition
-	 * @param rendition
-	 * @return the source code or null...
+	 * @param rendition the rendition of a document
+	 * @return the source node or null...
 	 */
 	public ScriptNode getSourceNode(ScriptNode rendition){
 		return new ScriptNode(renditionService.getSourceNode(rendition.getNodeRef()).getParentRef(), serviceRegistry, getScope());

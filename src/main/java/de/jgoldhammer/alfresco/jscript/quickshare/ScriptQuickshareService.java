@@ -38,8 +38,8 @@ public class ScriptQuickshareService extends BaseScopableProcessorExtension {
 	/**
 	 * unshare a content, so that a previously shared content cannot be accessed anymore from anonymous users.
 	 *
-	 * @param node the document to share (no folders supported)
-	 * @return the quick share id
+	 * @param shareId the shareid of the shared document
+	 *
 	 */
 	public void unshareContent(String shareId){
 		Preconditions.checkNotNull(shareId);
@@ -49,7 +49,7 @@ public class ScriptQuickshareService extends BaseScopableProcessorExtension {
 	/**
 	 * get metadata given by shareId
 	 *
-	 * @param shareId
+	 * @param shareId the shareid of the shared document
 	 * @return a map of metadata of the shared content
 	 */
 	public Map<String, Object> getMetadata(String shareId){
