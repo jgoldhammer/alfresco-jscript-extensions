@@ -26,7 +26,7 @@ public class ScriptDictionaryServiceTest extends BaseAlfrescoTest{
 
 	@Test
 	public void isSubType() throws Exception {
-		Assert.assertTrue(scriptDictionaryService.isSubType("cm:content","cm:object"));
+		Assert.assertTrue(scriptDictionaryService.isSubType("cm:thumbnail","cm:content"));
 		Assert.assertFalse(scriptDictionaryService.isSubType("cm:object", "cm:content"));
 
 	}

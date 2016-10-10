@@ -2,6 +2,7 @@ package de.jgoldhammer.alfresco.jscript.batchexecuter;
 
 import de.jgoldhammer.alfresco.jscript.BaseScriptingTest;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -14,6 +15,7 @@ import static org.junit.Assert.*;
  *
  * @author Bulat Yaminov
  */
+
 public class ScriptBEJobManagementTest extends BaseScriptingTest {
 
 //    private static final Log logger = LogFactory.getLog(BaseScriptingTest.class);
@@ -26,6 +28,7 @@ public class ScriptBEJobManagementTest extends BaseScriptingTest {
     }
 
     @Test
+    @Ignore("Not stable")
     public void jobsListCanBeFetched() throws InterruptedException {
         executeWithModelNonBlocking(
                 "batchExecuter.processFolderRecursively({\n" +
@@ -36,6 +39,7 @@ public class ScriptBEJobManagementTest extends BaseScriptingTest {
         );
         Thread.sleep(100);
         Collection<BatchJobParameters> jobs = batchExecuter.getCurrentJobs();
+
         assertTrue(jobs.size() >= 1);
         BatchJobParameters job = getJobByNameContains(jobs, "Company Home");
         assertNotNull(job);
@@ -63,6 +67,7 @@ public class ScriptBEJobManagementTest extends BaseScriptingTest {
     }
 
     @Test
+    @Ignore("Not stable")
     public void jobCanBeStopped() throws Exception {
         final int maxCreateCount = 100;
         executeWithModelNonBlocking(

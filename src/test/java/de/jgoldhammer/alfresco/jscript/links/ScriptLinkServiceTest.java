@@ -27,8 +27,15 @@ public class ScriptLinkServiceTest extends BaseAlfrescoTest {
 	@Before
 	public void init(){
 		AuthenticationUtil.setRunAsUserSystem();
-		documentId = generateTempDocument();
-		tempFolder=generateTempFolder();
+		transactionHelper.doInTransaction(new RetryingTransactionHelper.RetryingTransactionCallback<Void>() {
+			@Override
+			public Void execute() throws Throwable {
+				documentId = generateTempDocument();
+				tempFolder = generateTempFolder();
+				return null;
+			}
+		});
+
 	}
 
 	@Test
@@ -48,6 +55,7 @@ public class ScriptLinkServiceTest extends BaseAlfrescoTest {
 
 	@Test
 	public void deleteLinks() throws Exception {
+		// create the link
 		transactionHelper.doInTransaction(new RetryingTransactionHelper.RetryingTransactionCallback<Void>(){
 			@Override
 			public Void execute() throws Throwable {
@@ -57,8 +65,15 @@ public class ScriptLinkServiceTest extends BaseAlfrescoTest {
 				Assert.assertTrue(getServiceRegistry().getNodeService().getType(newDocumentLink.getNodeRef()).
 						equals(ApplicationModel.TYPE_FILELINK));
 
-				scriptLinkService.deleteLinks(new ScriptNode(documentId, getServiceRegistry()));
+				return null;
+			}
+		},false,true);
 
+		// delete the new created link
+		transactionHelper.doInTransaction(new RetryingTransactionHelper.RetryingTransactionCallback<Void>() {
+			@Override
+			public Void execute() throws Throwable {
+				scriptLinkService.deleteLinks(new ScriptNode(documentId, getServiceRegistry()));
 				return null;
 			}
 		});

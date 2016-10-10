@@ -28,63 +28,52 @@ public class ScriptQuickshareServiceTest extends BaseAlfrescoTest {
 
 	@Autowired
 	RetryingTransactionHelper retryingTransactionHelper;
+	private NodeRef testDocument;
 
 	@Before
 	public void init() throws SystemException, NotSupportedException {
 		AuthenticationUtil.setRunAsUserSystem();
+		testDocument = generateTempDocument();
+
 	}
 
 
 	@Test
 	public void canShareContent() throws Exception {
 
-//		retryingTransactionHelper.doInTransaction(new RetryingTransactionHelper.RetryingTransactionCallback<Void>() {
-//
-//			@Override
-//			public Void execute() throws Throwable {
-//				NodeRef testDocument = generateTempDocument();
-//				ScriptNode testNode = new ScriptNode(testDocument, getServiceRegistry());
-//				String sharedId = scriptQuickshareService.shareContent(testNode);
-//				Map<String, Object> metadata = scriptQuickshareService.getMetadata(sharedId);
-//				Assert.assertNotNull(metadata.get("nodeRef"));
-//				Assert.assertNotNull(metadata.get("sharedId"));
-//				Assert.assertNull(metadata.get("sharable"));
-//				return null;
-//			}
-//		});
+		retryingTransactionHelper.doInTransaction(new RetryingTransactionHelper.RetryingTransactionCallback<Void>() {
+			@Override
+			public Void execute() throws Throwable {
+				ScriptNode testNode = new ScriptNode(testDocument, getServiceRegistry());
+				String sharedId = scriptQuickshareService.shareContent(testNode);
+				Map<String, Object> metadata = scriptQuickshareService.getMetadata(sharedId);
+				Assert.assertNotNull(metadata.get("nodeRef"));
+				Assert.assertNotNull(metadata.get("sharedId"));
+				Assert.assertNull(metadata.get("sharable"));
+				return null;
+			}
+		});
 
 	}
 
 	@Test
 	public void canUnShareContent() throws Exception {
 
-		NodeRef testDocument = retryingTransactionHelper.doInTransaction(new RetryingTransactionHelper.RetryingTransactionCallback<NodeRef>() {
+		retryingTransactionHelper.doInTransaction(new RetryingTransactionHelper.RetryingTransactionCallback<Void>() {
 
-			@Override
-			public NodeRef execute() throws Throwable {
-				return generateTempDocument();
-			}
+			  @Override
+			  public Void execute() throws Throwable {
+				  ScriptNode scriptNode = new ScriptNode(testDocument, getServiceRegistry());
+
+				  String shareId = scriptQuickshareService.shareContent(scriptNode);
+				  scriptQuickshareService.unshareContent(shareId);
+
+				  Map<String, Object> metadata = scriptQuickshareService.getMetadata(scriptNode);
+				  Assert.assertNotNull(metadata);
+				  Assert.assertNull(metadata.get("sharedId"));
+				  return null;
+			  }
 		});
-
-//		retryingTransactionHelper.doInTransaction(new RetryingTransactionHelper.RetryingTransactionCallback<Void>() {
-//
-//			  @Override
-//			  public Void execute() throws Throwable {
-//				  ScriptNode scriptNode = new ScriptNode(testDocument, getServiceRegistry());
-//
-//				  String shareId = scriptQuickshareService.shareContent(scriptNode);
-//				  scriptQuickshareService.unshareContent(shareId);
-//
-//				  Map<String, Object> metadata = scriptQuickshareService.getMetadata(shareId);
-//				  Assert.assertNull(metadata);
-//
-//				  metadata = scriptQuickshareService.getMetadata(scriptNode);
-//				  Assert.assertNotNull(metadata.get("nodeRef"));
-//				  Assert.assertNull(metadata.get("sharedId"));
-//				  Assert.assertNotNull(metadata.get("sharable"));
-//				  return null;
-//			  }
-//		});
 
 
 	}

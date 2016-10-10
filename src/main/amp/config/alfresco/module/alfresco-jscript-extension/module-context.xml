@@ -43,12 +43,13 @@
 		<property name="alfrescoMBeanServer" ref="alfrescoMBeanServer" />
 	</bean>
 
-
+	<!--
 	<bean id="jobScriptFacade" parent="baseJavaScriptExtension"
 		class="de.jgoldhammer.alfresco.jscript.jobs.JobsScriptFacade" init-method="init">
 		<property name="extensionName" value="jobs" />
 		<property name="alfrescoMBeanServer" ref="alfrescoMBeanServer" />
 	</bean>
+	-->
 
 	<bean id="batchScriptFacade" parent="baseJavaScriptExtension"
 		class="de.jgoldhammer.alfresco.jscript.batch.BatchScriptFacade">

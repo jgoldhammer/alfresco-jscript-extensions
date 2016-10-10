@@ -5,6 +5,7 @@ import com.tradeshift.test.remote.RemoteTestRunner;
 import de.jgoldhammer.alfresco.jscript.BaseAlfrescoTest;
 import org.alfresco.repo.jscript.ScriptNode;
 import org.alfresco.repo.model.Repository;
+import org.alfresco.repo.transaction.RetryingTransactionHelper;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.util.test.junitrules.ApplicationContextInit;
@@ -31,39 +32,33 @@ public class ScriptPoliciesTest extends BaseAlfrescoTest {
 	@Autowired
 	ScriptPolicies scriptPolicies;
 
-	@Autowired
-	NodeService nodeService;
+
 
 	@Test
-	public void enableForNode() throws Exception {
-		NodeRef nodeRef = repo.getCompanyHome();
-		Assert.assertNotNull(nodeRef);
+	public void shouldEnableAndDisableForNode() throws Exception {
 
-		ScriptNode node = new ScriptNode(nodeRef, getServiceRegistry());
-		scriptPolicies.disableForNode(node);
-		node.setName("Tralala");
-		node.save();
+		transactionHelper.doInTransaction(new RetryingTransactionHelper.RetryingTransactionCallback<Void>() {
+
+			@Override
+			public Void execute() throws Throwable {
+				NodeRef nodeRef = repo.getCompanyHome();
+				Assert.assertNotNull(nodeRef);
+
+				ScriptNode node = new ScriptNode(nodeRef, getServiceRegistry());
+				scriptPolicies.disableForNode(node);
+				Assert.assertTrue(behaviourFilter.isEnabled());
+				Assert.assertFalse(behaviourFilter.isEnabled(nodeRef));
+
+				scriptPolicies.enableForNode(node);
+				Assert.assertTrue(behaviourFilter.isEnabled());
+				Assert.assertTrue(behaviourFilter.isEnabled(nodeRef));
+
+				return null;
+			}
+
+		});
 
 	}
 
-	@Test
-	public void enableForTypeOrAspect() throws Exception {
-
-	}
-
-	@Test
-	public void disableForTypeOrAspect() throws Exception {
-
-	}
-
-	@Test
-	public void enableAll() throws Exception {
-
-	}
-
-	@Test
-	public void disableForNode() throws Exception {
-
-	}
 
 }

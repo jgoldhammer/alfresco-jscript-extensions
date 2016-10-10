@@ -29,7 +29,7 @@ public class ScriptRepositoryTest extends BaseAlfrescoTest {
 
 	@Before
 	public void init() throws SystemException, NotSupportedException {
-		AuthenticationUtil.setRunAsUserSystem();
+		AuthenticationUtil.setAdminUserAsFullyAuthenticatedUser();
 	}
 
 	@Test
