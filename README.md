@@ -57,21 +57,32 @@ Following root objects are provided:
 	
 * **database** 
 	* to provide access to datasources (contributed by Florian Maul)
+	* run queries on the alfresco registered datasources like the standard sql database
+	* update data on the alfresco registered datasources like the standard sql database
+	* example: https://gist.github.com/jgoldhammer/e9aa16554e8cfe644d2fa9f85d63fbb3
 	 
+* **fileWriter**
+	* allows to create files during a longer processing on the server filesystem and persist it afterwards in the alfresco repository or send the attachment by mail 
+	* example: https://gist.github.com/jgoldhammer/77feac7db51a8bfba0033625108bf029
+	
 * **policies** 
 	* to temporarly disable or enable policy behavours during javascript extecution
 	* policy behaviours can be enabled or disabled on a specific node or a certain aspect/type
 	* example: https://gist.github.com/jgoldhammer/6941414
 	
-* **jmxClient** 
-	* to provide access to the alfresco global properties and system properties of the system
-	* list all propertiy values or get a specific property value
-	* example: https://gist.github.com/jgoldhammer/6941512
-	
 * **jobs** 
 	* list all alfresco repo background jobs
-	* start jobs in javascript via JMX
-	* example: https://gist.github.com/jgoldhammer/6941374
+	* start jobs in javascript via quartz Scheduler
+	* create new temporary jobs which execute javascript logic
+	
+	* example to list jobs:
+	* example to create a temporary quartz job with javascript execution: https://gist.github.com/jgoldhammer/e6a91672da18ba90fd3a978b8737fb8e
+	
+* **permissions**
+	* root object which exposes the permission service to javascript
+	* ask for permissions on nodes
+	* set permissions on nodes
+	* clear permissions on nodes
 
 * **repoAdmin** 
 	* uses the repo admin interpreter from the repo admin console
