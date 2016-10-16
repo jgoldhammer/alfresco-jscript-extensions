@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="58b21648-cee2-4ba8-83f1-da9603c087d0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deploy.sh" afterPath="$PROJECT_DIR$/deploy.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/db/ScriptDatabaseService.java" afterPath="$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/db/ScriptDatabaseService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/download/ScriptDownloadService.java" afterPath="$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/download/ScriptDownloadService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/file/ScriptFileWriter.java" afterPath="$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/file/ScriptFileWriter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/permission/ScriptPermissionService.java" afterPath="$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/permission/ScriptPermissionService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/db/TestScriptDatabaseService.java" afterPath="$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/db/TestScriptDatabaseService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/jobs/ScriptJobServiceTest.java" afterPath="$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/jobs/ScriptJobServiceTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/file/ScriptFileWriterTest.java" afterPath="$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/file/ScriptFileWriterTest.java" />
     </list>
     <ignored path="alfresco-jscript-extensions-repo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,33 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BatchJobParameters.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/batchexecuter/BatchJobParameters.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="566">
-              <caret line="92" column="26" selection-start-line="92" selection-start-column="26" selection-end-line="92" selection-end-column="26" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="432" column="21" selection-start-line="428" selection-start-column="4" selection-end-line="432" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="module-context.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/alfresco/module/alfresco-jscript-extension/module-context.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="153" column="56" selection-start-line="153" selection-start-column="46" selection-end-line="153" selection-end-column="56" />
+            <state relative-caret-position="224">
+              <caret line="126" column="15" selection-start-line="126" selection-start-column="15" selection-end-line="126" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -74,21 +45,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScriptDownloadService.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ScriptDownloadService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/download/ScriptDownloadService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="76" column="5" selection-start-line="76" selection-start-column="5" selection-end-line="76" selection-end-column="5" />
+            <state relative-caret-position="308">
+              <caret line="83" column="42" selection-start-line="83" selection-start-column="42" selection-end-line="83" selection-end-column="42" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScriptFileWriterTest.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DownloadService.java" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/alfresco/alfresco-repository/5.2.b-EA/alfresco-repository-5.2.b-EA-sources.jar!/org/alfresco/service/cmr/download/DownloadService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="155">
+              <caret line="60" column="18" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ScriptFileWriterTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/file/ScriptFileWriterTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
+            <state relative-caret-position="249">
+              <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -112,16 +93,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="239">
               <caret line="44" column="103" selection-start-line="44" selection-start-column="103" selection-end-line="44" selection-end-column="103" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScriptJob.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/jobs/ScriptJob.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="61" column="19" selection-start-line="61" selection-start-column="19" selection-end-line="61" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -177,7 +148,6 @@
         <option value="$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/dictionary/ScriptDictionaryServiceTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/repository/ScriptRepositoryTest.java" />
         <option value="$PROJECT_DIR$/src/test/resources/alfresco-global.properties" />
-        <option value="$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/file/ScriptFileWriterTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/jobs/AbstractLogEnabledScheduledLockedJob.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/links/ScriptLinkService.java" />
         <option value="$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/renditions/ScriptRenditionServiceTests.java" />
@@ -202,6 +172,7 @@
         <option value="$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/db/TestScriptDatabaseService.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/permission/ScriptPermissionService.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/download/ScriptDownloadService.java" />
+        <option value="$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/file/ScriptFileWriterTest.java" />
       </list>
     </option>
   </component>
@@ -648,7 +619,7 @@
       <recent name="$PROJECT_DIR$/src/test/properties/local" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestScriptDatabaseService.testUpdateWithAlfNode">
+  <component name="RunManager" selected="Remote.mvn debug jscript extension">
     <configuration default="false" name="ScriptJobServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -688,32 +659,6 @@
       <option name="PACKAGE_NAME" value="de.jgoldhammer.alfresco.jscript.jobs" />
       <option name="MAIN_CLASS_NAME" value="de.jgoldhammer.alfresco.jscript.jobs.ScriptJobServiceTest" />
       <option name="METHOD_NAME" value="shouldStartJobByRequest" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="false" name="ScriptJobServiceTest.testCreateJob" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="de.jgoldhammer.alfresco.jscript.jobs.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="alfresco-jscript-extensions-repo" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="de.jgoldhammer.alfresco.jscript.jobs" />
-      <option name="MAIN_CLASS_NAME" value="de.jgoldhammer.alfresco.jscript.jobs.ScriptJobServiceTest" />
-      <option name="METHOD_NAME" value="testCreateJob" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -767,6 +712,32 @@
       <option name="MAIN_CLASS_NAME" value="de.jgoldhammer.alfresco.jscript.db.TestScriptDatabaseService" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="ScriptFileWriterTest.shouldWriteContentToRepository" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="de.jgoldhammer.alfresco.jscript.file.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="alfresco-jscript-extensions-repo" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="de.jgoldhammer.alfresco.jscript.file" />
+      <option name="MAIN_CLASS_NAME" value="de.jgoldhammer.alfresco.jscript.file.ScriptFileWriterTest" />
+      <option name="METHOD_NAME" value="shouldWriteContentToRepository" />
+      <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -1015,17 +986,17 @@
       <item index="0" class="java.lang.String" itemvalue="Remote.mvn debug jscript extension" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.ScriptJobServiceTest" />
       <item index="2" class="java.lang.String" itemvalue="JUnit.ScriptJobServiceTest.shouldStartJobByRequest" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.ScriptJobServiceTest.testCreateJob" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.TestScriptDatabaseService.testUpdateWithAlfNode" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.TestScriptDatabaseService" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.TestScriptDatabaseService.testUpdateWithAlfNode" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.TestScriptDatabaseService" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.ScriptFileWriterTest.shouldWriteContentToRepository" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.TestScriptDatabaseService.testUpdateWithAlfNode" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.TestScriptDatabaseService" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.ScriptJobServiceTest.shouldStartJobByRequest" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.ScriptJobServiceTest" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.ScriptJobServiceTest.testCreateJob" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.ScriptFileWriterTest.shouldWriteContentToRepository" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.TestScriptDatabaseService.testUpdateWithAlfNode" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.TestScriptDatabaseService" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.ScriptJobServiceTest.shouldStartJobByRequest" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.ScriptJobServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -1046,8 +1017,8 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ScriptJobServiceTest - 2016.10.16 at 21h 41m 41s.xml">
-      <configuration name="ScriptJobServiceTest" configurationId="JUnit" />
+    <history-entry file="ScriptFileWriterTest_shouldWriteContentToRepository - 2016.10.16 at 23h 57m 19s.xml">
+      <configuration name="ScriptFileWriterTest.shouldWriteContentToRepository" configurationId="JUnit" />
     </history-entry>
     <history-entry file="ScriptJobServiceTest - 2016.10.16 at 21h 43m 52s.xml">
       <configuration name="ScriptJobServiceTest" configurationId="JUnit" />
@@ -1098,7 +1069,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="JRebel Executor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329927" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.48294678" sideWeight="0.49713877" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.48294678" sideWeight="0.49713877" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297561" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.124087594" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -1111,7 +1082,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4434907" sideWeight="0.5076253" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32469305" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32469305" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1181,11 +1152,17 @@
           <properties />
           <option name="timeStamp" value="39" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>jar://$MAVEN_REPOSITORY$/org/alfresco/alfresco-repository/5.2.b-EA/alfresco-repository-5.2.b-EA-sources.jar!/org/alfresco/service/cmr/download/DownloadService.java</url>
+          <line>60</line>
+          <properties class="org.alfresco.service.cmr.download.DownloadService" method="getDownloadStatus" />
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="46" />
+      <option name="time" value="50" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1194,34 +1171,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.6/commons-lang-2.6.jar!/org/apache/commons/lang/StringUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="649" column="25" selection-start-line="649" selection-start-column="25" selection-end-line="649" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/BaseScriptingTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="69" column="21" selection-start-line="69" selection-start-column="21" selection-end-line="69" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mozilla/rhino/1.7R4-alfresco-patched/rhino-1.7R4-alfresco-patched.jar!/org/mozilla/javascript/Kit.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="287" column="35" selection-start-line="287" selection-start-column="35" selection-end-line="287" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mozilla/rhino/1.7R4-alfresco-patched/rhino-1.7R4-alfresco-patched.jar!/org/mozilla/javascript/Decompiler.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="163" column="25" selection-start-line="163" selection-start-column="25" selection-end-line="163" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/mozilla/rhino/1.7R4-alfresco-patched/rhino-1.7R4-alfresco-patched.jar!/org/mozilla/javascript/NativeFunction.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -1549,22 +1498,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/alfresco/module/alfresco-jscript-extension/module-context.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="153" column="56" selection-start-line="153" selection-start-column="46" selection-end-line="153" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/file/ScriptFileWriterTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/file/ScriptFileWriter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-276">
@@ -1604,8 +1537,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/de/jgoldhammer/alfresco/jscript/download/ScriptDownloadService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="76" column="5" selection-start-line="76" selection-start-column="5" selection-end-line="76" selection-end-column="5" />
+        <state relative-caret-position="308">
+          <caret line="83" column="42" selection-start-line="83" selection-start-column="42" selection-end-line="83" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/alfresco/alfresco-repository/5.2.b-EA/alfresco-repository-5.2.b-EA-sources.jar!/org/alfresco/service/cmr/download/DownloadStatus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/alfresco/alfresco-repository/5.2.b-EA/alfresco-repository-5.2.b-EA-sources.jar!/org/alfresco/repo/download/DownloadStorage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="207" column="19" selection-start-line="207" selection-start-column="19" selection-end-line="207" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/alfresco/alfresco-repository/5.2.b-EA/alfresco-repository-5.2.b-EA-sources.jar!/org/alfresco/repo/download/DownloadServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="109" column="40" selection-start-line="109" selection-start-column="40" selection-end-line="109" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/alfresco/alfresco-repository/5.2.b-EA/alfresco-repository-5.2.b-EA-sources.jar!/org/alfresco/service/cmr/download/DownloadService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="60" column="18" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/alfresco/module/alfresco-jscript-extension/module-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="126" column="15" selection-start-line="126" selection-start-column="15" selection-end-line="126" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/de/jgoldhammer/alfresco/jscript/file/ScriptFileWriterTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -44,9 +44,9 @@ public class ScriptFileWriterTest extends BaseAlfrescoTest{
 				ScriptNode testReport = fileWriter.persist("Test"+System.nanoTime(), scriptRepository.getCompanyHome().getNodeRef().toString(),
 						"text/plain", "cm:content", false);
 				ContentReader reader = fileFolderService.getReader(testReport.getNodeRef());
+
 				Assert.assertTrue(reader.getContentString().equals("Hello"+IOUtils.LINE_SEPARATOR));
 				Assert.assertTrue(reader.getMimetype().equals("text/plain"));
-				Assert.assertTrue(nodeService.getType(testReport.getNodeRef()).toPrefixString().equals("cm:content"));
 				return null;
 			}
 		});

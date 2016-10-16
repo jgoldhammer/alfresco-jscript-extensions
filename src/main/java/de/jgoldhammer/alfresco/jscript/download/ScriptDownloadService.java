@@ -31,7 +31,7 @@ public class ScriptDownloadService extends BaseScopableProcessorExtension {
 		this.downloadService = downloadService;
 	}
 
-	public ScriptNode createDownloadByNodeRefs(String[] nodeRefs, boolean recursive){
+	public ScriptNode createByNodeRefs(String[] nodeRefs, boolean recursive){
 		Preconditions.checkNotNull(nodeRefs);
 
 		NodeRef[] nodeRefsParam = new NodeRef[nodeRefs.length];
@@ -42,14 +42,14 @@ public class ScriptDownloadService extends BaseScopableProcessorExtension {
 		return new ScriptNode(downloadService.createDownload(nodeRefsParam, recursive), serviceRegistry);
 	}
 
-	public ScriptNode createDownloadByNodeRef(String nodeRef, boolean recursive){
+	public ScriptNode createByNodeRef(String nodeRef, boolean recursive){
 		Preconditions.checkNotNull(nodeRef);
 		NodeRef[] nodeRefsParam = {new NodeRef(nodeRef)};
 
 		return new ScriptNode(downloadService.createDownload(nodeRefsParam, recursive), serviceRegistry);
 	}
 
-	public ScriptNode createDownload(ScriptNode[] nodes, boolean recursive){
+	public ScriptNode create(ScriptNode[] nodes, boolean recursive){
 		Preconditions.checkNotNull(nodes);
 
 		NodeRef[] nodeRefsParam = new NodeRef[nodes.length];
@@ -60,27 +60,27 @@ public class ScriptDownloadService extends BaseScopableProcessorExtension {
 		return new ScriptNode(downloadService.createDownload(nodeRefsParam, recursive), serviceRegistry);
 	}
 
-	public ScriptNode createDownload(ScriptNode node, boolean recursive){
+	public ScriptNode create(ScriptNode node, boolean recursive){
 		Preconditions.checkNotNull(node);
 		NodeRef[] nodeRefsParam = {node.getNodeRef()};
 		return new ScriptNode(downloadService.createDownload(nodeRefsParam, recursive), serviceRegistry);
 	}
 
-	public void cancelDownload(ScriptNode downloadRequest){
+	public void cancel(ScriptNode downloadRequest){
 		Preconditions.checkNotNull(downloadRequest,"downloadRequest cannot be null here");
 		downloadService.cancelDownload(downloadRequest.getNodeRef());
 	}
 
-	public void cancelDownload(String downloadRequestNodeRef){
+	public void cancel(String downloadRequestNodeRef){
 		Preconditions.checkNotNull(downloadRequestNodeRef,"downloadRequest cannot be null here");
 		downloadService.cancelDownload(new NodeRef(downloadRequestNodeRef));
 	}
 
-	public DownloadStatus getDownloadStatus(ScriptNode download){
+	public DownloadStatus getStatus(ScriptNode download){
 		return downloadService.getDownloadStatus(download.getNodeRef());
 	}
 
-	public DownloadStatus getDownloadStatus(String downloadNodeRef){
+	public DownloadStatus getStatus(String downloadNodeRef){
 		return downloadService.getDownloadStatus(new NodeRef(downloadNodeRef));
 	}
 }
