@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.jgoldhammer</groupId>
     <artifactId>alfresco-jscript-extension</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <name>Alfresco Jscript Repository Extensions</name>
     <description>This module contains some useful Alfresco repository Javascript Objects which can be used to develop alfresco repository extensions. Most of them reuse functionality from the public service api of Alfresco.</description>
     <url>https://github.com/jgoldhammer/alfresco-jscript-extensions</url>

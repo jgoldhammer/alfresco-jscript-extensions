@@ -21,6 +21,8 @@ package de.jgoldhammer.alfresco.jscript.permission;
 import com.google.common.base.Preconditions;
 import org.alfresco.repo.jscript.BaseScopableProcessorExtension;
 import org.alfresco.repo.jscript.ScriptNode;
+import org.alfresco.repo.security.authentication.AuthenticationUtil;
+import org.alfresco.repo.transaction.RetryingTransactionHelper;
 import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
@@ -42,6 +44,8 @@ public class ScriptPermissionService extends BaseScopableProcessorExtension {
 
 	private PermissionService permissionService;
 
+	private RetryingTransactionHelper retryingTransactionHelper;
+
 
 	public boolean hasReadPermission(String nodeRef){
 		Preconditions.checkNotNull(nodeRef);
@@ -51,9 +55,16 @@ public class ScriptPermissionService extends BaseScopableProcessorExtension {
 	public boolean hasPermission(String nodeRef, String permission){
 		Preconditions.checkNotNull(nodeRef);
 		Preconditions.checkNotNull(permission);
-
 		return permissionService.hasPermission(new NodeRef(nodeRef), permission)==AccessStatus.ALLOWED;
+	}
 
+	public boolean hasPermission(String nodeRef, String permission, String authority){
+		Preconditions.checkNotNull(nodeRef);
+		Preconditions.checkNotNull(permission);
+		Preconditions.checkNotNull(authority);
+
+		 return AuthenticationUtil.runAs(() ->
+				 permissionService.hasPermission(new NodeRef(nodeRef), permission) == AccessStatus.ALLOWED, authority);
 	}
 
 	/**
@@ -180,5 +191,9 @@ public class ScriptPermissionService extends BaseScopableProcessorExtension {
 
 	public void setPermissionService(PermissionService permissionService) {
 		this.permissionService = permissionService;
+	}
+
+	public void setRetryingTransactionHelper(RetryingTransactionHelper retryingTransactionHelper) {
+		this.retryingTransactionHelper = retryingTransactionHelper;
 	}
 }

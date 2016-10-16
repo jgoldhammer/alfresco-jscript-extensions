@@ -76,7 +76,6 @@ public class ScriptDownloadService extends BaseScopableProcessorExtension {
 		downloadService.cancelDownload(new NodeRef(downloadRequestNodeRef));
 	}
 
-
 	public DownloadStatus getDownloadStatus(ScriptNode download){
 		return downloadService.getDownloadStatus(download.getNodeRef());
 	}

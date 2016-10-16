@@ -55,5 +55,15 @@ public class TestScriptDatabaseService {
     	Assert.assertNotNull(query[0].entrySet());
     	Assert.assertEquals(2L, query[0].get("ID"));
     }
+
+	@Test
+	public void testUpdateWithAlfNode() {
+		int numberOfRowsAffected = scriptDatabaseService.update("dataSource", "Update alf_node set id=? where id=?", 2,2);
+		Assert.assertTrue(numberOfRowsAffected==1);
+
+		numberOfRowsAffected = scriptDatabaseService.update("dataSource", "Update alf_node set id=? where id=?", 3,21232323);
+		Assert.assertTrue(numberOfRowsAffected==0);
+
+	}
     
 }

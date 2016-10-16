@@ -1,5 +1,6 @@
 package de.jgoldhammer.alfresco.jscript.db;
 
+import com.google.common.base.Preconditions;
 import org.alfresco.error.AlfrescoRuntimeException;
 import org.alfresco.repo.processor.BaseProcessorExtension;
 import org.springframework.beans.BeansException;
@@ -35,24 +36,15 @@ public class ScriptDatabaseService extends BaseProcessorExtension implements App
 	@ScriptMethod()
 	public int update(String dataSourceName, String sql, Object... params) {
 		SimpleJdbcDaoSupport daoSupport = getDaoSupport(dataSourceName);
-		
-		if (daoSupport != null) {
-			return daoSupport.getSimpleJdbcTemplate().update(sql, params);
-		} else {
-			return 0;
-		}
+		Preconditions.checkNotNull(daoSupport," daosupport is null- please check the datasource name");
+		return daoSupport.getSimpleJdbcTemplate().update(sql, params);
 	}
 
 	public Map<String, Object>[] query(String dataSourceName, String sql, Object... params) {
 		SimpleJdbcDaoSupport daoSupport = getDaoSupport(dataSourceName);
-		
-		List<Map<String, Object>> result;
-		if (daoSupport != null) {
-			 result = daoSupport.getSimpleJdbcTemplate().queryForList(sql, params);
-		} else {
-			result = new ArrayList();
-		}
-		
+		Preconditions.checkNotNull(daoSupport," daosupport is null- please check the datasource name");
+
+		List<Map<String, Object>> result = daoSupport.getSimpleJdbcTemplate().queryForList(sql, params);
 		Map<String, Object>[] arr = new Map[result.size()];
 		for (int i=0; i < result.size(); i++) {
 			arr[i] = result.get(i);

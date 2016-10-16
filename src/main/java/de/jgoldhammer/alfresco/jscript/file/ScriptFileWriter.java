@@ -161,6 +161,19 @@ public class ScriptFileWriter extends BaseScopableProcessorExtension {
 	 * persist the file in the alfresco repository by using the following parameters.
 	 *
 	 * @param fileName the filename for the written file in the alfresco repository
+	 * @param folderNode the parent folder scriptNode
+	 * @param mimetype the mimetype to use, e.g. "text/csv" for csv mimetype
+	 * @param shortTypeName optional - the short type name e.g. cm:content for the file being written.
+	 * @param preserveFile optional - if true if the file should not be deleted. Consider always false!
+	 */
+	public ScriptNode persist(String fileName, ScriptNode folderNode, String mimetype, String shortTypeName, boolean preserveFile){
+		return persist(fileName, folderNode.getNodeRef().toString(), mimetype, shortTypeName, preserveFile);
+	}
+
+	/**
+	 * persist the file in the alfresco repository by using the following parameters.
+	 *
+	 * @param fileName the filename for the written file in the alfresco repository
 	 * @param folderNodeRef the parent folder id where the content should be written
 	 * @param mimetype the mimetype to use, e.g. "text/csv" for csv mimetype
 	 * @param shortTypeName optional - the short type name e.g. cm:content for the file being written.
