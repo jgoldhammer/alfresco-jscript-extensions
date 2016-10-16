@@ -60,7 +60,11 @@ Following root objects are provided:
 	* run queries on the alfresco registered datasources like the standard sql database
 	* update data on the alfresco registered datasources like the standard sql database
 	* example: https://gist.github.com/jgoldhammer/e9aa16554e8cfe644d2fa9f85d63fbb3
-	 
+
+* **downloads**
+	* create downloads for nodes in the repository 
+	* example: https://gist.github.com/jgoldhammer/5b751b1c31e88d555b17aba9e6944d0f
+	
 * **fileWriter**
 	* allows to create files during a longer processing on the server filesystem and persist it afterwards in the alfresco repository or send the attachment by mail 
 	* example: https://gist.github.com/jgoldhammer/77feac7db51a8bfba0033625108bf029
