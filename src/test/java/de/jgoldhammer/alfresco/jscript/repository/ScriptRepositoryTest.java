@@ -24,9 +24,6 @@ public class ScriptRepositoryTest extends BaseAlfrescoTest {
 	@Autowired
 	ScriptRepository scriptRepository;
 
-	@Autowired
-	RetryingTransactionHelper retryingTransactionHelper;
-
 	@Before
 	public void init() throws SystemException, NotSupportedException {
 		AuthenticationUtil.setAdminUserAsFullyAuthenticatedUser();
@@ -35,7 +32,7 @@ public class ScriptRepositoryTest extends BaseAlfrescoTest {
 	@Test
 	public void testNotNull() throws Exception {
 
-		retryingTransactionHelper.doInTransaction(new RetryingTransactionHelper.RetryingTransactionCallback<Void>() {
+		transactionHelper.doInTransaction(new RetryingTransactionHelper.RetryingTransactionCallback<Void>() {
 
 			  @Override
 			  public Void execute() throws Throwable {

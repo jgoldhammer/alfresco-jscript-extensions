@@ -15,7 +15,6 @@ import static org.junit.Assert.*;
  */
 public class ScriptDictionaryServiceTest extends BaseAlfrescoTest{
 
-
 	@Autowired
 	ScriptDictionaryService scriptDictionaryService;
 

@@ -9,8 +9,11 @@ import org.alfresco.repo.policy.PolicyComponent;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.repo.transaction.RetryingTransactionHelper;
 import org.alfresco.service.ServiceRegistry;
+import org.alfresco.service.cmr.dictionary.DictionaryService;
+import org.alfresco.service.cmr.model.FileFolderService;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
+import org.alfresco.service.cmr.repository.ScriptService;
 import org.alfresco.service.cmr.site.SiteInfo;
 import org.alfresco.util.test.junitrules.ApplicationContextInit;
 import org.alfresco.util.test.junitrules.TemporaryNodes;
@@ -58,7 +61,16 @@ public class BaseAlfrescoTest {
 	ServiceRegistry serviceRegistry;
 
 	@Autowired
-	NodeService nodeService;
+	protected FileFolderService fileFolderService;
+
+	@Autowired
+	protected DictionaryService dictionaryService;
+
+	@Autowired
+	protected NodeService nodeService;
+
+	@Autowired
+	protected ScriptService scriptService;
 
 	@Autowired
 	@Qualifier("policyBehaviourFilter")

@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.extensions.webscripts.annotation.ScriptClass;
 import org.springframework.extensions.webscripts.annotation.ScriptClassType;
+import org.springframework.extensions.webscripts.annotation.ScriptMethod;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 import javax.sql.DataSource;
@@ -31,6 +32,7 @@ public class ScriptDatabaseService extends BaseProcessorExtension implements App
 				this.applicationContext = applicationContext;
 	}
 
+	@ScriptMethod()
 	public int update(String dataSourceName, String sql, Object... params) {
 		SimpleJdbcDaoSupport daoSupport = getDaoSupport(dataSourceName);
 		

@@ -42,31 +42,31 @@ public class ScriptRepository extends BaseScopableProcessorExtension{
 	}
 
 	public ScriptNode getCompanyHome(){
-		return new ScriptNode(repository.getCompanyHome(),serviceRegistry);
+		return new ScriptNode(repository.getCompanyHome(),serviceRegistry, getScope());
 	}
 
 	public ScriptNode getRootHome(){
-		return new ScriptNode(repository.getRootHome(), serviceRegistry);
+		return new ScriptNode(repository.getRootHome(), serviceRegistry, getScope());
 	}
 
 	public ScriptNode getUserHome(){
-		return new ScriptNode(repository.getUserHome(repository.getPerson()), serviceRegistry);
+		return new ScriptNode(repository.getUserHome(repository.getPerson()), serviceRegistry,getScope());
 	}
 
 	public ScriptNode getPerson(){
-		return new ScriptNode(repository.getPerson(), serviceRegistry);
+		return new ScriptNode(repository.getPerson(), serviceRegistry,getScope());
 	}
 
 	public ScriptNode getPeopleContainer(){
-		return new ScriptNode(personService.getPeopleContainer(), serviceRegistry);
+		return new ScriptNode(personService.getPeopleContainer(), serviceRegistry, getScope());
 	}
 
 	public ScriptNode getSitesRoot(){
-		return new ScriptNode(siteService.getSiteRoot(), serviceRegistry);
+		return new ScriptNode(siteService.getSiteRoot(), serviceRegistry,getScope());
 	}
 
 	public ScriptNode getForDocLibForNode(ScriptNode source){
-		return new ScriptNode(docLibNodeLocator.getNode(source.getNodeRef(),null), serviceRegistry);
+		return new ScriptNode(docLibNodeLocator.getNode(source.getNodeRef(),null), serviceRegistry,getScope());
 	}
 
 

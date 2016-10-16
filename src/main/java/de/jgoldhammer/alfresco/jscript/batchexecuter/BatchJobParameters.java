@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Bean describing a de.jgoldhammer.alfresco.jscript.batch job being executed.
+ * Bean describing a batch job being executed.
  *
  * @author Bulat Yaminov
  */
@@ -118,7 +118,7 @@ public abstract class BatchJobParameters {
         job.setOnBatch(onBatch);
     }
 
-    private static Map<String, Object> getParametersMap(Object params) {
+    public static Map<String, Object> getParametersMap(Object params) {
         if (!(params instanceof ScriptableObject)) {
             throw new IllegalArgumentException("first parameter must be an object but was: " + params);
         }

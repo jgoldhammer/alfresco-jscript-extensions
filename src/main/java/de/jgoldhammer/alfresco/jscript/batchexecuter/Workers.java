@@ -139,7 +139,7 @@ public class Workers {
             Object resultArray = processFunction.call(Context.getCurrentContext(),
                     scope, scope, new Object[]{ itemsArray });
             if (logger.isTraceEnabled() && resultArray instanceof NativeArray) {
-                logger.trace(String.format("call on de.jgoldhammer.alfresco.jscript.batch gave %d results out of %d",
+                logger.trace(String.format("call on function gave %d results out of %d",
                         ((NativeArray) resultArray).getIds().length, entry.size()));
             }
         }

@@ -36,39 +36,24 @@ public class ScriptRenditionService  extends BaseScopableProcessorExtension {
 	}
 
 	/**
-	 * return a list of renditions for the specified node.
-	 *
-	 * @param node typically only documents are supported
-	 * @return a list of renditions of a node..
-	 */
-	public Scriptable getRenditions(ScriptNode node){
-
-		List<ChildAssociationRef> renditionsChilds = renditionService.getRenditions(node.getNodeRef());
-		Object[] renditions = new Object[renditionsChilds.size()];
-		for (int i = 0; i < renditionsChilds.size(); i++)
-		{
-			// create our Node representation from the NodeRef
-			renditions[i] = new ScriptNode(renditionsChilds.get(i).getChildRef(), serviceRegistry, getScope());
-		}
-		return Context.getCurrentContext().newArray(getScope(), renditions);
-	}
-
-	/**
-	 * checks if the given node is a rendition
+	 * checks if the given node is a renditions
 	 * @param node the node to check
-	 * @return true if the node is a rendition, false if not...
+	 * @return true if the node is a renditions, false if not...
 	 */
 	public boolean isRendition(ScriptNode node){
 		return renditionService.isRendition(node.getNodeRef());
 	}
 
 	/**
-	 * returns the source node if the rendition
-	 * @param rendition the rendition of a document
+	 * returns the source node if the renditions
+	 * @param rendition the renditions of a document
 	 * @return the source node or null...
 	 */
 	public ScriptNode getSourceNode(ScriptNode rendition){
 		return new ScriptNode(renditionService.getSourceNode(rendition.getNodeRef()).getParentRef(), serviceRegistry, getScope());
 	}
+
+
+
 
 }

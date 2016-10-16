@@ -4,6 +4,11 @@
 package de.jgoldhammer.alfresco.jscript.favorites;
 
 import com.google.common.base.Preconditions;
+import de.jgoldhammer.alfresco.jscript.jobs.ScriptJob;
+import org.alfresco.query.PagingRequest;
+import org.alfresco.query.PagingResults;
+import org.alfresco.repo.favourites.PersonFavourite;
+import org.alfresco.repo.jscript.BaseScopableProcessorExtension;
 import org.alfresco.repo.jscript.ScriptNode;
 import org.alfresco.repo.processor.BaseProcessorExtension;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
@@ -14,12 +19,18 @@ import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
 import org.jbpm.graph.action.Script;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.NativeArray;
+import org.mozilla.javascript.Scriptable;
 import org.springframework.extensions.webscripts.annotation.ScriptClass;
 import org.springframework.extensions.webscripts.annotation.ScriptClassType;
 import org.springframework.extensions.webscripts.annotation.ScriptMethod;
 import org.springframework.extensions.webscripts.annotation.ScriptMethodType;
 
+import java.lang.annotation.Native;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * script object for handling the FavouritesService.
@@ -29,7 +40,7 @@ import java.util.Collection;
  */
 
 @ScriptClass(types=ScriptClassType.JavaScriptRootObject, code= "favorites", help="the root object for the favorites service")
-public class ScriptFavoritesService extends BaseProcessorExtension {
+public class ScriptFavoritesService extends BaseScopableProcessorExtension {
 	private FavouritesService favouritesService;
 	private ServiceRegistry serviceRegistry;
 
@@ -50,7 +61,7 @@ public class ScriptFavoritesService extends BaseProcessorExtension {
 
 		Preconditions.checkNotNull(node,"Node parameter must be given");
 		ScriptNode result=null;
-		String username = AuthenticationUtil.getFullyAuthenticatedUser();
+		String username = AuthenticationUtil.getRunAsUser();
 
 		if(!favouritesService.isFavourite(username, node.getNodeRef())) {
 			NodeRef nodeRef = favouritesService.addFavourite(username, node.getNodeRef()).getNodeRef();
@@ -92,7 +103,7 @@ public class ScriptFavoritesService extends BaseProcessorExtension {
 			type = ScriptMethodType.WRITE)
 	public void remove(ScriptNode node){
 		Preconditions.checkNotNull(node,"Node parameter must be given");
-		String username = AuthenticationUtil.getFullyAuthenticatedUser();
+		String username = AuthenticationUtil.getRunAsUser();
 		// currently the return value of removeFavourite is always false- so we do not offer a return value here...
 		if(favouritesService.isFavourite(username, node.getNodeRef())){
 			favouritesService.removeFavourite(username, node.getNodeRef());
@@ -106,8 +117,31 @@ public class ScriptFavoritesService extends BaseProcessorExtension {
 			type = ScriptMethodType.READ)
 	public boolean isFavorite(ScriptNode node){
 		Preconditions.checkNotNull(node,"Node parameter must be given");
-		return favouritesService.isFavourite(AuthenticationUtil.getFullyAuthenticatedUser(), node.getNodeRef());
+		return favouritesService.isFavourite(AuthenticationUtil.getRunAsUser(), node.getNodeRef());
 	}
+
+	@ScriptMethod(
+			help = "get favorites for the current authenticated user",
+			output = "void",
+			code = "",
+			type = ScriptMethodType.READ)
+	public Scriptable getFavorites(int startCount, int limit){
+
+		PagingResults<PersonFavourite> favourites = favouritesService.getPagedFavourites(
+				AuthenticationUtil.getRunAsUser(),
+				FavouritesService.Type.ALL_FILTER_TYPES,
+				Collections.emptyList(),
+				new PagingRequest(startCount, limit));
+
+		List<PersonFavourite> favouritesList = favourites.getPage();
+		PersonFavourite[] favoritesArray = favouritesList.toArray(new PersonFavourite[favouritesList.size()]);
+
+		return Context.getCurrentContext().newArray(getScope(), favoritesArray);
+
+
+	}
+
+
 
 
 

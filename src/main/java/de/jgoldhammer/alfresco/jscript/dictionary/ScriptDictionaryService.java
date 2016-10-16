@@ -4,26 +4,40 @@
 package de.jgoldhammer.alfresco.jscript.dictionary;
 
 import com.google.common.base.Preconditions;
+import org.alfresco.repo.jscript.BaseScopableProcessorExtension;
+import org.alfresco.repo.jscript.Scopeable;
+import org.alfresco.repo.jscript.ScriptableHashMap;
 import org.alfresco.repo.processor.BaseProcessorExtension;
+import org.alfresco.service.cmr.dictionary.AspectDefinition;
+import org.alfresco.service.cmr.dictionary.ConstraintDefinition;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
+import org.alfresco.service.cmr.dictionary.PropertyDefinition;
 import org.alfresco.service.cmr.dictionary.TypeDefinition;
 import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Scriptable;
 import org.springframework.extensions.webscripts.annotation.ScriptClass;
 import org.springframework.extensions.webscripts.annotation.ScriptClassType;
 import org.springframework.extensions.webscripts.annotation.ScriptMethod;
 import org.springframework.extensions.webscripts.annotation.ScriptMethodType;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * script object for handling the behaviourFilter
+ * script object for dictionary
+ *
+ * some parts are copied from https://github.com/bluedolmen/App-blue-courrier/blob/ba0fa1e8119419fdb3bb3ccf844e60ad9df9a736/alfresco-extensions/src/main/java/org/bluedolmen/repo/jscript/DictionaryScript.java
  *
  * @author Jens Goldhammer (fme AG)
  */
 
 @ScriptClass(types=ScriptClassType.JavaScriptRootObject, code= "dictionary", help="the root object for the de.jgoldhammer.alfresco.jscript.dictionary service")
-public class ScriptDictionaryService extends BaseProcessorExtension {
+public class ScriptDictionaryService extends BaseScopableProcessorExtension {
 	private DictionaryService dictionaryService;
 
 	private NamespaceService namespaceService;
@@ -35,7 +49,6 @@ public class ScriptDictionaryService extends BaseProcessorExtension {
 	public void setNamespaceService(NamespaceService namespaceService) {
 		this.namespaceService = namespaceService;
 	}
-
 
 	@ScriptMethod(
 			help = "",
@@ -63,8 +76,118 @@ public class ScriptDictionaryService extends BaseProcessorExtension {
 			output = "void",
 			code = "",
 			type = ScriptMethodType.READ)
-	public TypeDefinition getType(String type){
+	public TypeDefinition getType(String type) {
 		return dictionaryService.getType(QName.resolveToQName(namespaceService, type));
+	}
+
+	public AspectDefinition getAspect(String aspectName) {
+		final QName qname = QName.resolveToQName(namespaceService, aspectName);
+		return dictionaryService.getAspect(qname);
+	}
+
+	/**
+	 * Get the property-names of the provided class-name
+	 *
+	 * @param className the name of the searched class formatted as an Alfresco
+	 *                  {@link QName}
+	 * @return an array of property-names as {@link String}s formatted as
+	 * Alfresco prefixed {@link QName}-s
+	 */
+	public Scriptable getPropertyNames(String className) {
+
+		final Map<QName, PropertyDefinition> propertyDefinitions = _getPropertyDefinitions(className);
+
+		final List<String> propertyNames = new ArrayList<String>();
+		for (QName propertyQName : propertyDefinitions.keySet()) {
+			propertyNames.add(propertyQName.toPrefixString());
+		}
+
+		return Context.getCurrentContext().newArray(
+				getScope(), propertyNames.toArray()
+		);
+
+	}
+
+	private Map<QName, PropertyDefinition> _getPropertyDefinitions(String className) {
+
+		final TypeDefinition typeDefinition = getType(className);
+		if (typeDefinition == null) return null;
+
+		final Map<QName, PropertyDefinition> propertyDefinitions = new HashMap<QName, PropertyDefinition>(typeDefinition.getProperties());
+
+		final List<AspectDefinition> aspectDefinitions = typeDefinition.getDefaultAspects(true);
+		for (AspectDefinition aspectDefinition : aspectDefinitions) {
+			propertyDefinitions.putAll(aspectDefinition.getProperties());
+		}
+
+		return propertyDefinitions;
+	}
+
+	/**
+	 * Get the property-definitions of the provided class-name
+	 *
+	 * @param className the name of the searched class formatted as an Alfresco
+	 *                  {@link QName}
+	 * @return a {@link Scriptable} (Object) of {@link PropertyDefinition}-s indexed by their
+	 * prefixed {@link QName} (as strings)
+	 */
+	public Scriptable getPropertyDefinitions(String className) {
+
+		final Map<QName, PropertyDefinition> propertyDefinitions = _getPropertyDefinitions(className);
+		final ScriptableHashMap<String, PropertyDefinition> result = new ScriptableHashMap<String, PropertyDefinition>();
+
+		for (QName propertyQName : propertyDefinitions.keySet()) {
+			final String propertyName = propertyQName.toPrefixString();
+			result.put(propertyName, propertyDefinitions.get(propertyQName));
+		}
+
+		return result;
+	}
+
+	/**
+	 * Get the {@link PropertyDefinition} of the provided name
+	 *
+	 * @param propertyName the name of the searched property formatted as an Alfresco
+	 *                     {@link QName}
+	 * @return the {@link PropertyDefinition} of the provided property-name (or null if
+	 * it does not exist)
+	 */
+	public PropertyDefinition getPropertyDefinition(String propertyName) {
+
+		final QName qname = QName.resolveToQName(namespaceService, propertyName);
+		if (null == qname) return null;
+
+		return dictionaryService.getProperty(qname);
+
+	}
+
+	/**
+	 * checks if a property is multivalued
+	 *
+	 * @param propertyName the name of the property
+	 * @return true if multivalued, false if single valued
+	 */
+	public boolean isMultivalued(String propertyName) {
+		PropertyDefinition property = dictionaryService.getProperty(QName.createQName(propertyName, namespaceService));
+		return property.isMultiValued();
+	}
+
+	/**
+	 * checks if the given property has a listconstrained applied.
+	 *
+	 * @param propertyName
+	 * @return true if yes, false if not.
+	 */
+	public boolean hasListConstaint(String propertyName) {
+		PropertyDefinition property = dictionaryService.getProperty(QName.createQName(propertyName, namespaceService));
+		List<ConstraintDefinition> constraints = property.getConstraints();
+		for (ConstraintDefinition constraintDefinition : constraints) {
+			String type = constraintDefinition.getConstraint().getType();
+			if (type != null && type.equals("LIST")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

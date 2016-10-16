@@ -37,16 +37,12 @@
             <property name="transactionService" ref="TransactionService" />
         </bean>
 
-        <bean id="jmxClientSciptFacade" parent="baseJavaScriptExtension"
-              class="de.jgoldhammer.alfresco.jscript.jmx.JmxClientScriptFacade">
-            <property name="extensionName" value="jmxClient" />
-            <property name="alfrescoMBeanServer" ref="alfrescoMBeanServer" />
-        </bean>
-
         <bean id="jobScriptFacade" parent="baseJavaScriptExtension"
-              class="de.jgoldhammer.alfresco.jscript.jobs.ScriptJobService" init-method="init">
+              class="de.jgoldhammer.alfresco.jscript.jobs.ScriptJobService">
             <property name="extensionName" value="jobs" />
-            <property name="alfrescoMBeanServer" ref="alfrescoMBeanServer" />
+            <property name="scheduler" ref="schedulerFactory" />
+            <property name="jobLockService" ref="jobLockService"/>
+            <property name="scriptService" ref="scriptService"/>
         </bean>
 
         <bean id="batchScriptFacade" parent="baseJavaScriptExtension"
@@ -149,5 +145,23 @@
 
         </bean>
 
+    <bean id="globalProperties" parent="baseJavaScriptExtension" class="de.jgoldhammer.alfresco.jscript.globalproperties.ScriptGlobalProperties">
+        <property name="properties" ref="global-properties" />
+        <property name="extensionName" value="properties" />
+    </bean>
+
+    <bean id="scriptFileWriter" parent="baseJavaScriptExtension" class="de.jgoldhammer.alfresco.jscript.file.ScriptFileWriter">
+        <property name="extensionName" value="fileWriter"/>
+        <property name="mailService" ref="mailService"/>
+        <property name="namespaceService" ref="NamespaceService"/>
+        <property name="fileFolderService" ref="FileFolderService"/>
+        <property name="serviceRegistry" ref="ServiceRegistry"/>
+        <property name="mimetypeService" ref="MimetypeService"/>
+    </bean>
+
+    <bean id="scriptPermissionService" parent="baseJavaScriptExtension" class="de.jgoldhammer.alfresco.jscript.permission.ScriptPermissionService">
+        <property name="extensionName" value="permissions"/>
+        <property name="permissionService" ref="PermissionService"/>
+    </bean>
 
     </beans>

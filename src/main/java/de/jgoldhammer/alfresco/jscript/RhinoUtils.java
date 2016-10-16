@@ -1,6 +1,7 @@
 package de.jgoldhammer.alfresco.jscript;
 
 import org.alfresco.repo.jscript.ScriptNode;
+import org.apache.commons.lang.StringUtils;
 import org.mozilla.javascript.*;
 
 import java.util.*;
@@ -41,6 +42,22 @@ public class RhinoUtils {
         }
         return result;
     }
+
+    public static String getString(Map<String, Object> map, String key, String defaultValue) {
+        String result = defaultValue;
+        if (map.get(key) != null) {
+            if (map.get(key) instanceof String) {
+                   String value = ((String) map.get(key));
+                    if(StringUtils.isNotBlank(value)){
+                        result = value;
+                    }
+            } else {
+                throw new IllegalArgumentException(key + " must be an string, but is instead: " + map.get(key));
+            }
+        }
+        return result;
+    }
+
 
     public static Function getFunction(Map<String, Object> map, String key) {
         Function result = null;
