@@ -96,7 +96,7 @@ Following root objects are provided:
 	* ask for permissions on nodes
 	* set permissions on nodes
 	* clear permissions on nodes
-	* example:
+	* example: https://gist.github.com/jgoldhammer/43ef55e32eabc5c281a95948dc7b93c7
 
 * **repoAdmin** 
 	* uses the repo admin interpreter from the repo admin console
