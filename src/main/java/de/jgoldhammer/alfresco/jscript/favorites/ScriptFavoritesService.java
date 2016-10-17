@@ -65,7 +65,7 @@ public class ScriptFavoritesService extends BaseScopableProcessorExtension {
 
 		if(!favouritesService.isFavourite(username, node.getNodeRef())) {
 			NodeRef nodeRef = favouritesService.addFavourite(username, node.getNodeRef()).getNodeRef();
-			result = new ScriptNode(nodeRef, serviceRegistry);
+			result = new ScriptNode(nodeRef, serviceRegistry,getScope());
 		}
 
 		return result;
@@ -87,7 +87,7 @@ public class ScriptFavoritesService extends BaseScopableProcessorExtension {
 				ScriptNode result=null;
 				if(!favouritesService.isFavourite(username, node.getNodeRef())) {
 					NodeRef nodeRef = favouritesService.addFavourite(username, node.getNodeRef()).getNodeRef();
-					result = new ScriptNode(nodeRef, serviceRegistry);
+					result = new ScriptNode(nodeRef, serviceRegistry, getScope());
 				}
 				return result;
 			}
@@ -134,7 +134,7 @@ public class ScriptFavoritesService extends BaseScopableProcessorExtension {
 				new PagingRequest(startCount, limit));
 
 		List<PersonFavourite> favouritesList = favourites.getPage();
-		PersonFavourite[] favoritesArray = favouritesList.toArray(new PersonFavourite[favouritesList.size()]);
+		Object[] favoritesArray = favouritesList.toArray(new Object[favouritesList.size()]);
 
 		return Context.getCurrentContext().newArray(getScope(), favoritesArray);
 
