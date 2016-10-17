@@ -64,9 +64,17 @@ Following root objects are provided:
 * **downloads**
 	* create downloads for nodes in the repository 
 	* example: https://gist.github.com/jgoldhammer/5b751b1c31e88d555b17aba9e6944d0f
-	
+
+* **favorites**
+	* add a favorite
+	* remove a favorite
+	* check if a node is a favorite
+	* get all favorites of a user
+	* example: https://gist.github.com/jgoldhammer/2ff5df55407c79c3240f318873888b00
+
 * **fileWriter**
-	* allows to create files during a longer processing on the server filesystem and persist it afterwards in the alfresco repository or send the attachment by mail 
+	* allows to create files during a longer processing on the server filesystem and persist it afterwards in the alfresco 
+	repository or send the attachment by mail 
 	* example: https://gist.github.com/jgoldhammer/77feac7db51a8bfba0033625108bf029
 	
 * **policies** 
@@ -80,23 +88,21 @@ Following root objects are provided:
 	* create new temporary jobs which execute javascript logic
 	
 	* example to list jobs:
-	* example to create a temporary quartz job with javascript execution: https://gist.github.com/jgoldhammer/e6a91672da18ba90fd3a978b8737fb8e
+	* example to create a temporary quartz job with javascript execution: 
+	 https://gist.github.com/jgoldhammer/e6a91672da18ba90fd3a978b8737fb8e
 	
 * **permissions**
 	* root object which exposes the permission service to javascript
 	* ask for permissions on nodes
 	* set permissions on nodes
 	* clear permissions on nodes
+	* example:
 
 * **repoAdmin** 
 	* uses the repo admin interpreter from the repo admin console
 	* write your commands and get back the result in the js-console
 	* example 1: ```print(repoAdmin.exec('help'))``` - show the help
 	* example 2: ```print(reopAdmin.exec('show models'));```  - show all additional datamodels
-
-* **solr** 
-	* currently get the index state of a node (currently not working due to a bug in the SolrIndexService)
-	* example: tbd
 	
 * **tenantAdmin** 
 	* uses the repo admin interpreter from the repo admin console
