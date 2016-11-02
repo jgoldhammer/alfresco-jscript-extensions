@@ -1,8 +1,10 @@
 package de.jgoldhammer.alfresco.jscript.model;
 
 import org.alfresco.query.PagingRequest;
+import org.alfresco.repo.jscript.BaseScopableProcessorExtension;
 import org.alfresco.repo.jscript.ScriptNode;
 import org.alfresco.repo.processor.BaseProcessorExtension;
+import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.dictionary.CustomModelDefinition;
 import org.alfresco.service.cmr.dictionary.CustomModelService;
@@ -15,19 +17,10 @@ import java.util.List;
 /**
  * Created by jgoldhammer on 17.09.16.
  */
-public class ScriptModelService extends BaseProcessorExtension {
+public class ScriptModelService extends BaseScopableProcessorExtension {
 
 	CustomModelService customModelService;
 	ServiceRegistry serviceRegistry;
-	Scriptable scope;
-
-	/**
-	 * @see org.alfresco.repo.jscript.Scopeable#setScope(org.mozilla.javascript.Scriptable)
-	 */
-	public void setScope(Scriptable scope)
-	{
-		this.scope = scope;
-	}
 
 	public void setServiceRegistry(ServiceRegistry serviceRegistry) {
 		this.serviceRegistry = serviceRegistry;
@@ -35,6 +28,14 @@ public class ScriptModelService extends BaseProcessorExtension {
 
 	public void setCustomModelService(CustomModelService customModelService) {
 		this.customModelService = customModelService;
+	}
+
+	/**
+	 * checks whether the current user is a model admin...
+	 * @return true if the user is a model admin or super admin, false if not
+	 */
+	public boolean isModelAdmin(){
+		return customModelService.isModelAdmin(AuthenticationUtil.getRunAsUser());
 	}
 
 	/**
@@ -65,7 +66,8 @@ public class ScriptModelService extends BaseProcessorExtension {
 
 	public Scriptable getCustomModels(int start, int end){
 		List<CustomModelDefinition> customModels = customModelService.getCustomModels(new PagingRequest(start, end)).getPage();
-		return Context.getCurrentContext().newArray(scope,customModels.toArray(new Object[customModels.size()]));
+		return Context.getCurrentContext().newArray(getScope(),customModels.toArray(new Object[customModels.size()]));
 	}
+
 
 }

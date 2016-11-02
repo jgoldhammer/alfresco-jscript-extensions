@@ -145,7 +145,7 @@
 
         </bean>
 
-    <bean id="globalProperties" parent="baseJavaScriptExtension" class="de.jgoldhammer.alfresco.jscript.globalproperties.ScriptGlobalProperties">
+    <bean id="scriptVariablesService" parent="baseJavaScriptExtension" class="de.jgoldhammer.alfresco.jscript.variables.ScriptVariablesService">
         <property name="properties" ref="global-properties" />
         <property name="extensionName" value="properties" />
     </bean>

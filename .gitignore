@@ -1,5 +1,5 @@
 /target
-/alf_data_dev
+/alf_data_dev**
 .idea/**
 alfresco.log
 share.log
@@ -7,3 +7,6 @@ solr.log
 alfresco.log.*
 share.log.*
 solr.log.*
+@@ALFRESCO_SOLR4_DATA_DIR@@/
+
+**.iml

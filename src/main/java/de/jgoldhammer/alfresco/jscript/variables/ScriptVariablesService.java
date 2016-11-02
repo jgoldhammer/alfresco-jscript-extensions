@@ -1,4 +1,4 @@
-package de.jgoldhammer.alfresco.jscript.globalproperties;
+package de.jgoldhammer.alfresco.jscript.variables;
 
 import java.util.Properties;
 import org.alfresco.repo.jscript.BaseScopableProcessorExtension;
@@ -7,7 +7,7 @@ import org.alfresco.repo.jscript.BaseScopableProcessorExtension;
  * Expose global properties to js scripts
  *
  */
-public class ScriptGlobalProperties extends BaseScopableProcessorExtension {
+public class ScriptVariablesService extends BaseScopableProcessorExtension {
 
     private Properties properties;
     

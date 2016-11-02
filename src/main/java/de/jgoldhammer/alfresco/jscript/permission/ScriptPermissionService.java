@@ -20,19 +20,19 @@ package de.jgoldhammer.alfresco.jscript.permission;
 
 import com.google.common.base.Preconditions;
 import org.alfresco.repo.jscript.BaseScopableProcessorExtension;
+import org.alfresco.repo.jscript.People;
 import org.alfresco.repo.jscript.ScriptNode;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.repo.transaction.RetryingTransactionHelper;
-import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.security.AccessPermission;
 import org.alfresco.service.cmr.security.AccessStatus;
 import org.alfresco.service.cmr.security.PermissionService;
-import org.apache.commons.lang3.StringUtils;
+import org.jbpm.graph.action.Script;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Scriptable;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -47,25 +47,48 @@ public class ScriptPermissionService extends BaseScopableProcessorExtension {
 	private RetryingTransactionHelper retryingTransactionHelper;
 
 
-	public boolean hasReadPermission(String nodeRef){
+	public boolean hasReadPermission(String nodeRef) {
 		Preconditions.checkNotNull(nodeRef);
-		return permissionService.hasReadPermission(new NodeRef(nodeRef))==AccessStatus.ALLOWED;
+		return permissionService.hasReadPermission(new NodeRef(nodeRef)) == AccessStatus.ALLOWED;
 	}
 
-	public boolean hasPermission(String nodeRef, String permission){
+	public boolean hasPermission(String nodeRef, String permission) {
 		Preconditions.checkNotNull(nodeRef);
 		Preconditions.checkNotNull(permission);
-		return permissionService.hasPermission(new NodeRef(nodeRef), permission)==AccessStatus.ALLOWED;
+		return permissionService.hasPermission(new NodeRef(nodeRef), permission) == AccessStatus.ALLOWED;
 	}
 
-	public boolean hasPermission(String nodeRef, String permission, String authority){
+	public boolean hasPermission(String nodeRef, String permission, String authority) {
 		Preconditions.checkNotNull(nodeRef);
 		Preconditions.checkNotNull(permission);
 		Preconditions.checkNotNull(authority);
 
-		 return AuthenticationUtil.runAs(() ->
-				 permissionService.hasPermission(new NodeRef(nodeRef), permission) == AccessStatus.ALLOWED, authority);
+		return AuthenticationUtil.runAs(() ->
+				permissionService.hasPermission(new NodeRef(nodeRef), permission) == AccessStatus.ALLOWED, authority);
 	}
+
+	public boolean hasReadPermission(ScriptNode node) {
+		Preconditions.checkNotNull(node);
+		return permissionService.hasReadPermission(node.getNodeRef()) == AccessStatus.ALLOWED;
+	}
+
+	public boolean hasPermission(ScriptNode node, String permission) {
+		Preconditions.checkNotNull(node);
+		Preconditions.checkNotNull(permission);
+		return permissionService.hasPermission(node.getNodeRef(), permission) == AccessStatus.ALLOWED;
+	}
+
+
+	public boolean hasPermission(ScriptNode node, String permission, ScriptNode authority) {
+		Preconditions.checkNotNull(node);
+		Preconditions.checkNotNull(permission);
+		Preconditions.checkNotNull(authority);
+
+		return AuthenticationUtil.runAs(() ->
+				permissionService.hasPermission(node.getNodeRef(), permission) == AccessStatus.ALLOWED, (String) authority.getProperties().get("userName"));
+	}
+
+
 
 	/**
 	 * sets a new permission for a certain authority on a certain node by specifying if the permission is allowed or denied.
@@ -92,6 +115,43 @@ public class ScriptPermissionService extends BaseScopableProcessorExtension {
 				permission,
 				allow
 		);
+	}
+
+	/**
+	 * get the permissions of a node as native javascript array of type AccessPermission
+	 *
+	 * @param nodeRef the node to get the permissions for
+	 */
+	public Scriptable getPermissions(String nodeRef){
+		Preconditions.checkNotNull(nodeRef);
+		Set<AccessPermission> permissions = permissionService.getPermissions(new NodeRef(nodeRef));
+		Object[] permissionsArray = permissions.toArray(new Object[permissions.size()]);
+
+		return Context.getCurrentContext().newArray(getScope(), permissionsArray);
+
+	}
+
+	/**
+	 * get the current user permissions of a node as native javascript array of type AccessPermission
+	 *
+	 * @param node the scriptnode
+	 */
+	public Scriptable getPermissionsOfCurrentUser(ScriptNode node){
+		Preconditions.checkNotNull(node);
+		return getPermissions(node.getNodeRef().toString());
+	}
+
+	/**
+	 * get all permissions of a node as native javascript array of type AccessPermission
+	 *
+	 * @param node the scriptnode
+	 */
+	public Scriptable getAllPermissions(ScriptNode node){
+		Preconditions.checkNotNull(node);
+		Set<AccessPermission> permissions = permissionService.getAllSetPermissions(node.getNodeRef());
+
+		Object[] permissionsArray = permissions.toArray(new Object[permissions.size()]);
+		return Context.getCurrentContext().newArray(getScope(), permissionsArray);
 	}
 
 	/**

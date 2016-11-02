@@ -4,13 +4,11 @@
 package de.jgoldhammer.alfresco.jscript.favorites;
 
 import com.google.common.base.Preconditions;
-import de.jgoldhammer.alfresco.jscript.jobs.ScriptJob;
 import org.alfresco.query.PagingRequest;
 import org.alfresco.query.PagingResults;
 import org.alfresco.repo.favourites.PersonFavourite;
 import org.alfresco.repo.jscript.BaseScopableProcessorExtension;
 import org.alfresco.repo.jscript.ScriptNode;
-import org.alfresco.repo.processor.BaseProcessorExtension;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.dictionary.DictionaryService;
