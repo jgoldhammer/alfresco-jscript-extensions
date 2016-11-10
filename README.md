@@ -7,7 +7,7 @@ Alfresco 5.0.d (Build-4.2) [![Build Status](https://travis-ci.org/jgoldhammer/al
 
 Alfresco repository module with helpful javascript root object extensions which are helpful in much scenarios.
 
-Usage
+Usage for Alfresco 4.2 - Alfresco 5.0.d
 --------
 
 Add the dependencies to the Alfresco repository and share POM files of your WAR projects.
@@ -19,7 +19,7 @@ Alfresco SDK 2.x
       <dependency>
         <groupId>de.jgoldhammer</groupId>
         <artifactId>alfresco-jscript-extension</artifactId>
-        <version>1.2</version>
+        <version>1.3.1</version>
         <type>amp</type>
       </dependency>
       ...
@@ -30,7 +30,7 @@ Alfresco SDK 2.x
       <overlay>
         <groupId>de.jgoldhammer</groupId>
         <artifactId>alfresco-jscript-extension</artifactId>
-        <version>1.2</version>
+        <version>1.3.1</version>
         <type>amp</type>
       </overlay>
       ...
@@ -42,7 +42,47 @@ Alfresco SDK 3.x
 		<moduleDependency>
 			<groupId>de.jgoldhammer</groupId>
 	        	<artifactId>alfresco-jscript-extension</artifactId>
-	        	<version>1.2</version>
+	        	<version>1.3.1</version>
+	        	<type>amp</type>
+        	</moduleDependency>
+	</platformModules>
+	
+Usage since Alfresco 5.1.a
+--------
+
+Add the dependencies to the Alfresco repository and share POM files of your WAR projects.
+
+Alfresco SDK 2.x
+
+    <dependencies>
+      ...
+      <dependency>
+        <groupId>de.jgoldhammer</groupId>
+        <artifactId>alfresco-jscript-extension</artifactId>
+        <version>1.3</version>
+        <type>amp</type>
+      </dependency>
+      ...
+    </dependencies>
+
+    <overlays>
+      ...
+      <overlay>
+        <groupId>de.jgoldhammer</groupId>
+        <artifactId>alfresco-jscript-extension</artifactId>
+        <version>1.3</version>
+        <type>amp</type>
+      </overlay>
+      ...
+    </overlays>
+
+Alfresco SDK 3.x
+
+	<platformModules>
+		<moduleDependency>
+			<groupId>de.jgoldhammer</groupId>
+	        	<artifactId>alfresco-jscript-extension</artifactId>
+	        	<version>1.3</version>
 	        	<type>amp</type>
         	</moduleDependency>
 	</platformModules>
