@@ -1,9 +1,9 @@
 alfresco-jscript-extensions
 ===========================
 
-Alfresco 5.1 (Master) [![Build Status](https://travis-ci.org/jgoldhammer/alfresco-jscript-extensions.svg?branch=master)](https://travis-ci.org/jgoldhammer/alfresco-jscript-extensions)
+Alfresco 5.1 (Master) [![Build Status](https://travis-ci.org/ecm4u/alfresco-jscript-extensions.svg?branch=master)](https://travis-ci.org/jgoldhammer/alfresco-jscript-extensions)
 
-Alfresco 5.0.d (Build-4.2) [![Build Status](https://travis-ci.org/jgoldhammer/alfresco-jscript-extensions.svg?branch=build-4.2)](https://travis-ci.org/jgoldhammer/alfresco-jscript-extensions)
+Alfresco 5.0.d (Build-4.2) [![Build Status](https://travis-ci.org/ecm4u/alfresco-jscript-extensions.svg?branch=build-4.2)](https://travis-ci.org/jgoldhammer/alfresco-jscript-extensions)
 
 Alfresco repository module with helpful javascript root object extensions which are helpful in much scenarios.
 
