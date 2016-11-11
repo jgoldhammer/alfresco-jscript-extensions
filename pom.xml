@@ -43,9 +43,6 @@
     </developers>
 
     <properties>
-
-        <sonatypeOssDistMgmtSnapshotsUrl>https://oss.sonatype.org/content/repositories/snapshots/</sonatypeOssDistMgmtSnapshotsUrl>
-
             <!-- Alfresco Maven Plugin version to use -->
             <alfresco.sdk.version>3.0.0-beta-4</alfresco.sdk.version>
 
@@ -372,19 +369,6 @@
             <id>release</id>
             <build>
                 <plugins>
-                    <!-- plugin for publishing maven artifacts-->
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.7</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                        </configuration>
-                    </plugin>
-
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
@@ -412,57 +396,6 @@
                             </execution>
                         </executions>
                     </plugin>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.6</version>
-                        <configuration>
-                            <useAgent>false</useAgent>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>de.jutzig</groupId>
-                        <artifactId>github-release-plugin</artifactId>
-                        <version>1.1.1</version>
-                        <executions>
-                            <execution>
-                                <id>github-upload</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>release</goal>
-                                </goals>
-                                <inherited>false</inherited>
-                                <configuration>
-                                    <description>${project.description}</description>
-                                    <releaseName>v${project.version}</releaseName>
-                                    <prerelease>false</prerelease>
-                                    <tag>v${project.version}</tag>
-                                    <fileSets>
-                                        <fileSet>
-                                            <directory>${project.build.directory}</directory>
-                                            <includes>
-                                                <include>${project.artifactId}*.jar</include>
-                                                <include>${project.artifactId}*.pom</include>
-                                            </includes>
-                                        </fileSet>
-                                    </fileSets>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-
                 </plugins>
             </build>
         </profile>
