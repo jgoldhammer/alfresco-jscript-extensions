@@ -22,6 +22,7 @@ import org.springframework.extensions.webscripts.annotation.ScriptMethodType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.mozilla.javascript.NativeJavaObject;
 
 /**
  * fascade to a de.jgoldhammer.alfresco.jscript.batch processor implementation.
@@ -172,7 +173,11 @@ public class BatchScriptFacade extends BaseProcessorExtension implements Scopeab
 		List<NodeRef> nodes = new ArrayList<NodeRef>();
 		for (Object id : scriptNodes.getIds()) {
 			int index = (Integer) id;
-			ScriptNode scriptNode = (ScriptNode) scriptNodes.get(index, null);
+                        Object obj = scriptNodes.get(index);
+                        if (obj instanceof NativeJavaObject) {
+                            obj = ((NativeJavaObject) obj).unwrap();
+                        }
+			ScriptNode scriptNode = (ScriptNode) obj;
 			nodes.add(scriptNode.getNodeRef());
 		}
 		return nodes;
