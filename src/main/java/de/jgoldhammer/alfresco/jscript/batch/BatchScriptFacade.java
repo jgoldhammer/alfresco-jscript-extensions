@@ -158,10 +158,36 @@ public class BatchScriptFacade extends BaseProcessorExtension implements Scopeab
 		processor = new BatchProcessor<Collection<NodeRef>>(batchName, transactionService.getRetryingTransactionHelper(),
 				new SimpleListWorkProvider(nodeRefs, batchSize), workerThreads, FIXED_BATCH_SIZE, null, null, FIXED_BATCH_SIZE);
 
-		processor.process(new ScriptedBatchProcessWorker(runAsSystem, batchScope, processorFunction, nodeRefs,
-				beforeProcessFunction, afterProcessFunction, Context.getCurrentContext(), serviceRegistry, scriptService), true);
-
+                final ScriptedBatchProcessWorker scriptedBatchProcessWorker = new ScriptedBatchProcessWorker(
+                    runAsSystem,
+                    batchScope,
+                    processorFunction,
+                    nodeRefs,
+                    beforeProcessFunction,
+                    afterProcessFunction,
+                    Context.getCurrentContext(),
+                    serviceRegistry,
+                    scriptService);
+                
+                Runner p = new Runner(processor, scriptedBatchProcessWorker);
+                new Thread(p).start();
 	}
+        
+        private static class Runner implements Runnable {
+            
+            BatchProcessor<Collection<NodeRef>> processor;
+            ScriptedBatchProcessWorker scriptedBatchProcessWorker;
+
+            private Runner(BatchProcessor<Collection<NodeRef>> processor, ScriptedBatchProcessWorker scriptedBatchProcessWorker) {
+                this.processor = processor;
+                this.scriptedBatchProcessWorker = scriptedBatchProcessWorker;
+            }
+
+            @Override
+            public void run() {
+                processor.process(scriptedBatchProcessWorker, true);
+            }
+        }
 
 	/**
 	 * converts the native array of scriptnodes to a list of noderefs
