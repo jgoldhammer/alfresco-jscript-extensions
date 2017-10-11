@@ -43,49 +43,46 @@
     </developers>
 
     <properties>
+        <!-- Alfresco Maven Plugin version to use -->
+        <alfresco.sdk.version>3.0.0-beta-4</alfresco.sdk.version>
 
-        <sonatypeOssDistMgmtSnapshotsUrl>https://oss.sonatype.org/content/repositories/snapshots/</sonatypeOssDistMgmtSnapshotsUrl>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-            <!-- Alfresco Maven Plugin version to use -->
-            <alfresco.sdk.version>3.0.0-beta-4</alfresco.sdk.version>
+        <!-- Alfresco Data directory, which will contain:
+        Content Store (i.e. the files we upload)
+        Database (i.e. the metadata for the uploaded files)
+        Search index (i.e. the indexed content and metadata)
+     Configured in alfresco-global.properties with the 'dir.root' property.
+        -->
+        <alfresco.data.location>./alf_data_dev</alfresco.data.location>
 
-            <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Duplicated with alfresco.solrHome in the plugin, we need them out here to do filtering -->
+        <solr.home>${alfresco.data.location}/solr</solr.home>
+        <solr.model.dir>${solr.home}/alfrescoModels</solr.model.dir>
+        <solr.content.dir>${solr.home}/index</solr.content.dir>
 
-            <!-- Alfresco Data directory, which will contain:
-                    Content Store (i.e. the files we upload)
-                    Database (i.e. the metadata for the uploaded files)
-                    Search index (i.e. the indexed content and metadata)
-                 Configured in alfresco-global.properties with the 'dir.root' property.
-                    -->
-            <alfresco.data.location>./alf_data_dev</alfresco.data.location>
+        <!-- Properties used in dependency declarations, you don't need to change these -->
+        <alfresco.groupId>org.alfresco</alfresco.groupId>
+        <!-- Platform WAR artifact, change to 'alfresco-enterprise' if using Enterprise Edition -->
+        <alfresco.platform.war.artifactId>alfresco-platform</alfresco.platform.war.artifactId>
 
-            <!-- Duplicated with alfresco.solrHome in the plugin, we need them out here to do filtering -->
-            <solr.home>${alfresco.data.location}/solr</solr.home>
-            <solr.model.dir>${solr.home}/alfrescoModels</solr.model.dir>
-            <solr.content.dir>${solr.home}/index</solr.content.dir>
+        <!-- Alfresco Platform webapp version, this is the original Alfresco webapp that will be
+        customized and then deployed and run by the tomcat maven plugin when
+        executing for example $ mvn clean install alfresco:run -->
+        <alfresco.platform.version>5.2.b-EA</alfresco.platform.version>
+        <!-- Alfresco Share version, so we can bring in correct alfresco-share-services artifact -->
+        <alfresco.share.version>5.2.a-EA</alfresco.share.version>
 
-            <!-- Properties used in dependency declarations, you don't need to change these -->
-            <alfresco.groupId>org.alfresco</alfresco.groupId>
-            <!-- Platform WAR artifact, change to 'alfresco-enterprise' if using Enterprise Edition -->
-            <alfresco.platform.war.artifactId>alfresco-platform</alfresco.platform.war.artifactId>
+        <!-- JRebel Hot reloading of classpath stuff and web resource stuff -->
+        <jrebel.version>1.1.6</jrebel.version>
 
-            <!-- Alfresco Platform webapp version, this is the original Alfresco webapp that will be
-                customized and then deployed and run by the tomcat maven plugin when
-                executing for example $ mvn clean install alfresco:run -->
-            <alfresco.platform.version>5.2.b-EA</alfresco.platform.version>
-            <!-- Alfresco Share version, so we can bring in correct alfresco-share-services artifact -->
-            <alfresco.share.version>5.2.a-EA</alfresco.share.version>
+        <!-- Environment to use, Alfresco Maven Plugin will
+        copy alfresco-global-*.properties files from this directory, such as src/test/properties/local -->
+        <env>local</env>
 
-            <!-- JRebel Hot reloading of classpath stuff and web resource stuff -->
-            <jrebel.version>1.1.6</jrebel.version>
-
-            <!-- Environment to use, Alfresco Maven Plugin will
-                 copy alfresco-global-*.properties files from this directory, such as src/test/properties/local -->
-            <env>local</env>
-
-            <!-- Compile with Java 7, default is 5 -->
-            <maven.compiler.source>1.8</maven.compiler.source>
-            <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- Compile with Java 7, default is 5 -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 
     </properties>
 
@@ -113,7 +110,7 @@
         <dependency>
             <groupId>${alfresco.groupId}</groupId>
             <artifactId>alfresco-repository</artifactId>
-	    <scope>provided</scope>
+            <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
         <dependency>
@@ -168,18 +165,24 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>ecm4u-snapshots</id>
+            <name>3rd Party Snapshots</name>
+            <url>http://esb-dev.ecm4u.intra:9091/repository/3rd-party-snapshots/</url>
         </snapshotRepository>
+        <repository>
+            <id>ecm4u-releases</id>
+            <name>3rd Party Releases</name>
+            <url>http://esb-dev.ecm4u.intra:9091/repository/3rd-party/</url>
+        </repository>
     </distributionManagement>
 
     <build>
         <plugins>
 
             <!--
-                The Alfresco Maven Plugin contains all the logic to run the extension
-                in an embedded Tomcat with the H2 database.
-                -->
+            The Alfresco Maven Plugin contains all the logic to run the extension
+            in an embedded Tomcat with the H2 database.
+            -->
             <plugin>
                 <groupId>org.alfresco.maven.plugin</groupId>
                 <artifactId>alfresco-maven-plugin</artifactId>
@@ -198,9 +201,9 @@
                     <enableShare>true</enableShare>
 
                     <!--
-                       JARs and AMPs that should be overlayed/applied to the Platform/Repository WAR
-                       (i.e. alfresco.war)
-                       -->
+                    JARs and AMPs that should be overlayed/applied to the Platform/Repository WAR
+                    (i.e. alfresco.war)
+                    -->
                     <platformModules>
                         <!-- This AMP is needed if we are going to access the platform webapp from a Share webapp -->
                         <moduleDependency>
@@ -222,7 +225,7 @@
                             <artifactId>ootbee-support-tools-repo</artifactId>
                             <version>0.0.1.0-SNAPSHOT</version>
                             <type>amp</type>
-                         </moduleDependency>
+                        </moduleDependency>
 
 
                         <!-- Bring in this JAR project, need to be included here, otherwise resources from META-INF
@@ -288,7 +291,7 @@
                 </executions>
                 <configuration>
                     <!-- For more information about how to configure JRebel plugin see:
-                         http://manuals.zeroturnaround.com/jrebel/standalone/maven.html#maven-rebel-xml -->
+                    http://manuals.zeroturnaround.com/jrebel/standalone/maven.html#maven-rebel-xml -->
                     <classpath>
                         <fallback>all</fallback>
                         <resources>
@@ -366,19 +369,6 @@
             <id>release</id>
             <build>
                 <plugins>
-                    <!-- plugin for publishing maven artifacts-->
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.7</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                        </configuration>
-                    </plugin>
-
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
@@ -406,57 +396,6 @@
                             </execution>
                         </executions>
                     </plugin>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.6</version>
-                        <configuration>
-                            <useAgent>false</useAgent>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>de.jutzig</groupId>
-                        <artifactId>github-release-plugin</artifactId>
-                        <version>1.1.1</version>
-                        <executions>
-                            <execution>
-                                <id>github-upload</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>release</goal>
-                                </goals>
-                                <inherited>false</inherited>
-                                <configuration>
-                                    <description>${project.description}</description>
-                                    <releaseName>v${project.version}</releaseName>
-                                    <prerelease>false</prerelease>
-                                    <tag>v${project.version}</tag>
-                                    <fileSets>
-                                        <fileSet>
-                                            <directory>${project.build.directory}</directory>
-                                            <includes>
-                                                <include>${project.artifactId}*.jar</include>
-                                                <include>${project.artifactId}*.pom</include>
-                                            </includes>
-                                        </fileSet>
-                                    </fileSets>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-
                 </plugins>
             </build>
         </profile>
@@ -464,9 +403,59 @@
 
     <repositories>
         <repository>
+            <id>ecm4u-snapshots</id>
+            <name>ecm4u Snapshots</name>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </releases>
+            <url>http://esb-dev.ecm4u.intra:9091/repository/ecm4u-snapshots/</url>
+        </repository>
+        
+        <repository>
+            <id>ecm4u-releases</id>
+            <name>ecm4u Releases</name>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </releases>
+            <url>http://esb-dev.ecm4u.intra:9091/repository/ecm4u-releases/</url>
+        </repository>
+
+        <repository>
+            <id>3rd-party-snapshots</id>
+            <name>3rd Party Snapshots</name>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </snapshots>
+            <url>http://esb-dev.ecm4u.intra:9091/repository/3rd-party-snapshots/</url>
+        </repository>
+        
+        <repository>
+            <id>3rd-party</id>
+            <name>3rd party modules</name>
+            <url>http://esb-dev.ecm4u.intra:9091/repository/3rd-party/</url>
+        </repository>
+        
+        <repository>
             <id>alfresco-public</id>
             <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
         </repository>
+        
         <repository>
             <id>alfresco-public-snapshots</id>
             <url>https://artifacts.alfresco.com/nexus/content/groups/public-snapshots</url>
@@ -475,10 +464,10 @@
                 <updatePolicy>daily</updatePolicy>
             </snapshots>
         </repository>
-        <!-- Alfresco Enterprise Edition Artifacts, put username/pwd for server in settings.xml -->
+        
         <repository>
-            <id>alfresco-private-repository</id>
-            <url>https://artifacts.alfresco.com/nexus/content/groups/private</url>
+            <id>alfresco-private</id>
+            <url>http://esb-dev.ecm4u.intra:9091/repository/alfresco-private/</url>
         </repository>
     </repositories>
     <pluginRepositories>
