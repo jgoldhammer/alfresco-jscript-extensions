@@ -7,7 +7,6 @@ import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.repository.DeleteLinksStatusReport;
 import org.alfresco.service.cmr.repository.DocumentLinkService;
 import org.alfresco.service.cmr.repository.NodeRef;
-import org.jbpm.graph.action.Script;
 
 /**
  * encapsulates the documentlinkservice which allows to create links for documents into other folders,

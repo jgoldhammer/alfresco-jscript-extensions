@@ -8,7 +8,6 @@ import org.alfresco.repo.site.DocLibNodeLocator;
 import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.security.PersonService;
 import org.alfresco.service.cmr.site.SiteService;
-import org.jbpm.graph.action.Script;
 
 /**
  * wraps the repository bean to have quick methods to access certain nodes in the repository.

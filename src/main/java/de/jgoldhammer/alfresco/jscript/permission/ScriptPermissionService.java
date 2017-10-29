@@ -29,7 +29,6 @@ import org.alfresco.service.cmr.repository.StoreRef;
 import org.alfresco.service.cmr.security.AccessPermission;
 import org.alfresco.service.cmr.security.AccessStatus;
 import org.alfresco.service.cmr.security.PermissionService;
-import org.jbpm.graph.action.Script;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
 
