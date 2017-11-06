@@ -24,6 +24,18 @@
             <property name="extensionName" value="auth" />
         </bean>
 
+        <bean id="scriptAttributeService" parent="baseJavaScriptExtension"
+              class="de.jgoldhammer.alfresco.jscript.attributes.ScriptAttributeService">
+            <property name="extensionName" value="attributes" />
+            <property name="attributeService" ref="AttributeService" />
+        </bean>
+
+        <bean id="scriptRuleService" parent="baseJavaScriptExtension"
+              class="de.jgoldhammer.alfresco.jscript.rules.ScriptRulesService">
+            <property name="extensionName" value="rules" />
+            <property name="ruleService" ref="RuleService" />
+        </bean>
+
         <bean id="scriptPolicies" parent="baseJavaScriptExtension"
               class="de.jgoldhammer.alfresco.jscript.policy.ScriptPolicies">
             <property name="extensionName" value="policies" />

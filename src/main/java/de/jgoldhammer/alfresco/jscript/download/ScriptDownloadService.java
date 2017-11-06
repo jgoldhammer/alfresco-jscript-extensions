@@ -3,14 +3,12 @@ package de.jgoldhammer.alfresco.jscript.download;
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.google.common.util.concurrent.Service;
 import org.alfresco.repo.jscript.BaseScopableProcessorExtension;
 import org.alfresco.repo.jscript.ScriptNode;
 import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.download.DownloadService;
 import org.alfresco.service.cmr.download.DownloadStatus;
 import org.alfresco.service.cmr.repository.NodeRef;
-import org.jbpm.graph.action.Script;
 
 import java.util.Arrays;
 

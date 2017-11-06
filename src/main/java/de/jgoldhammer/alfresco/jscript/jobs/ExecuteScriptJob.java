@@ -14,8 +14,6 @@ import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import static com.sun.xml.bind.v2.util.XmlFactory.logger;
-
 /**
  * Quartz job that executes a scheduled inline js script.
  * The job execution is cluster aware and using the joblockservice.

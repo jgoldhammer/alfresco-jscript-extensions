@@ -1,54 +1,13 @@
 alfresco-jscript-extensions
 ===========================
 
-Alfresco 5.1 (Master) [![Build Status](https://travis-ci.org/ecm4u/alfresco-jscript-extensions.svg?branch=master)](https://travis-ci.org/ecm4u/alfresco-jscript-extensions)
-
-Alfresco 5.0.d (Build-4.2) [![Build Status](https://travis-ci.org/ecm4u/alfresco-jscript-extensions.svg?branch=build-4.2)](https://travis-ci.org/jgoldhammer/alfresco-jscript-extensions)
-
+Alfresco  (Master) [![Build Status](https://travis-ci.org/jgoldhammer/alfresco-jscript-extensions.svg?branch=master)](https://travis-ci.org/jgoldhammer/alfresco-jscript-extensions)
 Alfresco repository module with helpful javascript root object extensions which are helpful in much scenarios.
 
-Usage for Alfresco 4.2 - Alfresco 5.0.d
---------
+Important: Alfresco 4.2 - 5.0 is not supported anymore.
 
-Add the dependencies to the Alfresco repository and share POM files of your WAR projects.
-
-Alfresco SDK 2.x
-
-    <dependencies>
-      ...
-      <dependency>
-        <groupId>de.jgoldhammer</groupId>
-        <artifactId>alfresco-jscript-extension</artifactId>
-        <version>1.3.1</version>
-        <type>amp</type>
-      </dependency>
-      ...
-    </dependencies>
-
-    <overlays>
-      ...
-      <overlay>
-        <groupId>de.jgoldhammer</groupId>
-        <artifactId>alfresco-jscript-extension</artifactId>
-        <version>1.3.1</version>
-        <type>amp</type>
-      </overlay>
-      ...
-    </overlays>
-
-Alfresco SDK 3.x
-
-	<platformModules>
-		<moduleDependency>
-			<groupId>de.jgoldhammer</groupId>
-	        	<artifactId>alfresco-jscript-extension</artifactId>
-	        	<version>1.3.1</version>
-	        	<type>amp</type>
-        	</moduleDependency>
-	</platformModules>
-	
 Usage since Alfresco 5.1.a
---------
+------------------------------
 
 Add the dependencies to the Alfresco repository and share POM files of your WAR projects.
 
@@ -59,7 +18,7 @@ Alfresco SDK 2.x
       <dependency>
         <groupId>de.jgoldhammer</groupId>
         <artifactId>alfresco-jscript-extension</artifactId>
-        <version>1.3</version>
+        <version>1.5</version>
         <type>amp</type>
       </dependency>
       ...
@@ -70,7 +29,7 @@ Alfresco SDK 2.x
       <overlay>
         <groupId>de.jgoldhammer</groupId>
         <artifactId>alfresco-jscript-extension</artifactId>
-        <version>1.3</version>
+        <version>1.5</version>
         <type>amp</type>
       </overlay>
       ...
@@ -82,12 +41,19 @@ Alfresco SDK 3.x
 		<moduleDependency>
 			<groupId>de.jgoldhammer</groupId>
 	        	<artifactId>alfresco-jscript-extension</artifactId>
-	        	<version>1.3</version>
+	        	<version>1.5</version>
 	        	<type>amp</type>
         	</moduleDependency>
 	</platformModules>
    
+
 Following root objects are provided:
+* **attributes**
+	* get attributes by key
+	* create attributes
+	* remove attributes
+	* example: tbd
+	
 * **auth**
 	* to change the authentication to another user during the javascript execution
 	* to get the current executing authenticated user
@@ -145,6 +111,14 @@ Following root objects are provided:
 	* write your commands and get back the result in the js-console
 	* example 1: ```print(repoAdmin.exec('help'))``` - show the help
 	* example 2: ```print(reopAdmin.exec('show models'));```  - show all additional datamodels
+	
+	
+* **rules** 
+	* enable and disable the rulesservice globally
+	* enable and disable certain rules
+	* enable and disable rules executation for certain nodes
+	* count rules
+	* example: https://gist.github.com/jgoldhammer/442b18c730438114925f57616205203e
 	
 * **tenantAdmin** 
 	* uses the repo admin interpreter from the repo admin console
