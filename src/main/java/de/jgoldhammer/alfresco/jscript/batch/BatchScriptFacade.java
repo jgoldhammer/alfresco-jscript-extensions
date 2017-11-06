@@ -101,7 +101,7 @@ public class BatchScriptFacade extends BaseProcessorExtension implements Scopeab
 			if (searchResult.length() != 0) {
 				searchResult.setBulkFetch(false);
 
-				processor = new BatchProcessor<Collection<NodeRef>>(batchName, transactionService.getRetryingTransactionHelper(),
+				processor = new BatchProcessor<>(batchName, transactionService.getRetryingTransactionHelper(),
 						new QueryResultBatchProcessWorkProvider(searchResult, batchSize), workerThreads, FIXED_BATCH_SIZE, null,
 						null, FIXED_BATCH_SIZE);
 
@@ -155,7 +155,7 @@ public class BatchScriptFacade extends BaseProcessorExtension implements Scopeab
 		final Scriptable batchScope = this.scope;
 		List<NodeRef> nodeRefs = convertScriptNodesArray(scriptNodes);
 
-		processor = new BatchProcessor<Collection<NodeRef>>(batchName, transactionService.getRetryingTransactionHelper(),
+		processor = new BatchProcessor<>(batchName, transactionService.getRetryingTransactionHelper(),
 				new SimpleListWorkProvider(nodeRefs, batchSize), workerThreads, FIXED_BATCH_SIZE, null, null, FIXED_BATCH_SIZE);
 
                 final ScriptedBatchProcessWorker scriptedBatchProcessWorker = new ScriptedBatchProcessWorker(
@@ -175,8 +175,8 @@ public class BatchScriptFacade extends BaseProcessorExtension implements Scopeab
         
         private static class Runner implements Runnable {
             
-            BatchProcessor<Collection<NodeRef>> processor;
-            ScriptedBatchProcessWorker scriptedBatchProcessWorker;
+            private final BatchProcessor<Collection<NodeRef>> processor;
+            private final ScriptedBatchProcessWorker scriptedBatchProcessWorker;
 
             private Runner(BatchProcessor<Collection<NodeRef>> processor, ScriptedBatchProcessWorker scriptedBatchProcessWorker) {
                 this.processor = processor;
@@ -196,7 +196,7 @@ public class BatchScriptFacade extends BaseProcessorExtension implements Scopeab
 	 * @return list of noderefs
 	 */
 	private List<NodeRef> convertScriptNodesArray(NativeArray scriptNodes) {
-		List<NodeRef> nodes = new ArrayList<NodeRef>();
+		List<NodeRef> nodes = new ArrayList<>();
 		for (Object id : scriptNodes.getIds()) {
 			int index = (Integer) id;
                         Object obj = scriptNodes.get(index);
