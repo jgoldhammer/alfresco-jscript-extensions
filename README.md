@@ -18,7 +18,7 @@ Alfresco SDK 2.x
       <dependency>
         <groupId>de.jgoldhammer</groupId>
         <artifactId>alfresco-jscript-extension</artifactId>
-        <version>1.5</version>
+        <version>1.7</version>
         <type>amp</type>
       </dependency>
       ...
@@ -29,7 +29,7 @@ Alfresco SDK 2.x
       <overlay>
         <groupId>de.jgoldhammer</groupId>
         <artifactId>alfresco-jscript-extension</artifactId>
-        <version>1.5</version>
+        <version>1.7</version>
         <type>amp</type>
       </overlay>
       ...
@@ -41,7 +41,7 @@ Alfresco SDK 3.x
 		<moduleDependency>
 			<groupId>de.jgoldhammer</groupId>
 	        	<artifactId>alfresco-jscript-extension</artifactId>
-	        	<version>1.5</version>
+	        	<version>1.7</version>
 	        	<type>amp</type>
         	</moduleDependency>
 	</platformModules>
