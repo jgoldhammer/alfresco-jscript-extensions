@@ -9,10 +9,10 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.extensions.webscripts.annotation.ScriptClass;
 import org.springframework.extensions.webscripts.annotation.ScriptClassType;
 import org.springframework.extensions.webscripts.annotation.ScriptMethod;
-import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,16 +35,16 @@ public class ScriptDatabaseService extends BaseProcessorExtension implements App
 
 	@ScriptMethod()
 	public int update(String dataSourceName, String sql, Object... params) {
-		SimpleJdbcDaoSupport daoSupport = getDaoSupport(dataSourceName);
+		JdbcDaoSupport daoSupport = getDaoSupport(dataSourceName);
 		Preconditions.checkNotNull(daoSupport," daosupport is null- please check the datasource name");
-		return daoSupport.getSimpleJdbcTemplate().update(sql, params);
+		return daoSupport.getJdbcTemplate().update(sql, params);
 	}
 
 	public Map<String, Object>[] query(String dataSourceName, String sql, Object... params) {
-		SimpleJdbcDaoSupport daoSupport = getDaoSupport(dataSourceName);
+		JdbcDaoSupport daoSupport = getDaoSupport(dataSourceName);
 		Preconditions.checkNotNull(daoSupport," daosupport is null- please check the datasource name");
 
-		List<Map<String, Object>> result = daoSupport.getSimpleJdbcTemplate().queryForList(sql, params);
+		List<Map<String, Object>> result = daoSupport.getJdbcTemplate().queryForList(sql, params);
 		Map<String, Object>[] arr = new Map[result.size()];
 		for (int i=0; i < result.size(); i++) {
 			arr[i] = result.get(i);
@@ -52,11 +52,11 @@ public class ScriptDatabaseService extends BaseProcessorExtension implements App
 		return arr;
 	}
 	
-	private SimpleJdbcDaoSupport getDaoSupport(String dataSourceName) {
+	private JdbcDaoSupport getDaoSupport(String dataSourceName) {
 		Object dsBean = applicationContext.getBean(dataSourceName);
 		
 		if (dsBean instanceof DataSource) {
-			SimpleJdbcDaoSupport daoSupport = new SimpleJdbcDaoSupport();
+			JdbcDaoSupport daoSupport = new NamedParameterJdbcDaoSupport();
 			daoSupport.setDataSource((DataSource) dsBean);
 			return daoSupport;
 		}
