@@ -217,13 +217,6 @@
                             <type>amp</type>
                         </moduleDependency>
 
-                        <moduleDependency>
-                            <groupId>org.orderofthebee.addons</groupId>
-                            <artifactId>ootbee-support-tools-repo</artifactId>
-                            <version>0.0.1.0-SNAPSHOT</version>
-                            <type>amp</type>
-                         </moduleDependency>
-
 
                         <!-- Bring in this JAR project, need to be included here, otherwise resources from META-INF
                              will not be loaded, such as the test.html page
