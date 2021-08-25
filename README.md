@@ -2,16 +2,16 @@ alfresco-jscript-extensions
 ===========================
 
 Alfresco  (Master) [![Build Status](https://travis-ci.org/jgoldhammer/alfresco-jscript-extensions.svg?branch=master)](https://travis-ci.org/jgoldhammer/alfresco-jscript-extensions)
-Alfresco repository module with helpful javascript root object extensions which are helpful in much scenarios.
+Alfresco repository module with helpful javascript root object extensions which are helpful in much scenarios for Alfresco 5.1 and higher.
 
 Important: Alfresco 4.2 - 5.0 is not supported anymore.
 
-Usage since Alfresco 5.1.a
+Maven usage
 ------------------------------
 
-Add the dependencies to the Alfresco repository and share POM files of your WAR projects.
-
 Alfresco SDK 2.x
+
+Add the dependencies to the Alfresco repository POM files of your WAR projects.
 
     <dependencies>
       ...
@@ -37,6 +37,8 @@ Alfresco SDK 2.x
 
 Alfresco SDK 3.x
 
+Add the dependencies to the Alfresco repository POM files of your WAR projects.
+
 	<platformModules>
 		<moduleDependency>
 			<groupId>de.jgoldhammer</groupId>
@@ -45,7 +47,21 @@ Alfresco SDK 3.x
 	        	<type>amp</type>
         	</moduleDependency>
 	</platformModules>
-   
+
+Alfresco SDK 4.x
+
+Including the AMP artifact into an All-in-One project created from the archetype provided by Alfresco SDK 4, the following dependency must be added to the *-platform-docker sub-module of the generated project:
+
+	<dependency>
+		<groupId>de.jgoldhammer</groupId>
+		<artifactId>alfresco-jscript-extension</artifactId>
+		<version>1.8.0</version>
+	</dependency>
+
+# Functionality
+
+The extension provides some root objects for java serivces in the alfresco api.
+The root objects provides easier access via js-console or javascript based webscripts.
 
 Following root objects are provided:
 * **attributes**
@@ -137,14 +153,28 @@ Following root objects are provided:
 	* example 1: ```print(workflowAdmin.exec('help'))``` - show the help
 	* example 2: ```print(workflowAdmin.exec('show definitions'));```  - show all workflow definitions
  
-Building
---------
+# Build
+
 
 To build the module and its AMP / JAR files, run the following command from the base 
 project directory:
 
     mvn install
 
+# Release
 
 
+- Change the version number in pom.xml
+- push the release to  sonatype nexus with following command
+	
+
+    .deploy.sh
+	
+
+# License
+
+The project is using Apache 2.0 license - see See [LICENSE.md](./LICENSE.md)
+
+Original authors:
+- Jens Goldhammer, fme AG
 
